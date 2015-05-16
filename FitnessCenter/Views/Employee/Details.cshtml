@@ -1,0 +1,50 @@
+﻿@model FitnessCenter.Models.EmployeeViewModel
+
+@{
+    ViewBag.Title = "Подробности";
+}
+
+<h2>Подробности</h2>
+
+<div>
+    <h4>Сотрудник</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.Model.Name, "Имя", htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model.Name)
+        </dd>
+
+        <dt>
+           @Html.LabelFor(model => model.Model.Surname, "Фамилия", htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model.Surname)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Model.MiddleName, "Отчество", htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model.MiddleName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Model.Description, "Описание", htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model.Description)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Model.ID }) |
+    @Html.ActionLink("Назад", "Index")
+</p>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<FitnessCenter.Models.EmployeeViewModel>
+
+@{
+    ViewBag.Title = "Сотрудники";
+}
+
+<h2>Список сотрудников</h2>
+
+<p>
+    @Html.ActionLink("Добавить", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Имя
+        </th>
+        <th>
+            Отчество
+        </th>
+        <th>
+            Фамилия
+        </th>
+        <th>
+            Описание
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model.MiddleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.Model.ID }) |
+            @Html.ActionLink("Подробности", "Details", new { id = item.Model.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.Model.ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<FitnessCenter.Entities.Room>
+
+@{
+    ViewBag.Title = "Залы";
+}
+
+<h2>Список залов</h2>
+
+<p>
+    @Html.ActionLink("Добавить", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Название
+        </th>
+        <th>
+            Описание
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Подробности", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

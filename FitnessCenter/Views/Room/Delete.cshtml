@@ -1,0 +1,40 @@
+﻿@model FitnessCenter.Entities.Room
+
+@{
+    ViewBag.Title = "Удалить";
+}
+
+<h2>Удалить</h2>
+
+<h3>Вы уверены, что хотите удалить это?</h3>
+<div>
+    <h4>Зал</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.Name, "Название", htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>        
+
+        <dt>
+            @Html.LabelFor(model => model.Description, "Описание", htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
+        </div>
+    }
+</div>
