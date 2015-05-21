@@ -6,7 +6,6 @@
 
 <h2>Создать</h2>
 
-
 @using (Html.BeginForm("Create", "Employee", FormMethod.Post, new {enctype = "multipart/form-data"}) )
 {
     @Html.AntiForgeryToken()
@@ -47,12 +46,17 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" id="Avatar" name="upload" />
+        @using (Html.BeginForm("PostImg", "Employee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                @Html.Label("Avatar", new { @class = "control-label col-md-2" })                
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="fileupload" type="file" name="upload" multiple="multiple">
+                </div>
+                <div class="col-md-offset-2 col-md-10 row" id="imgContent">
+                </div>
             </div>
-        </div>
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -62,10 +66,28 @@
     </div>
 }
 
-<div>
+<div> 
     @Html.ActionLink("Назад", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileupload")
+    <script type="text/javascript">
+    $(function () {
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            url: '@Url.Action("PostImg","Employee")',
+            done: function (e, data) {
+                $.each(data.result, function (index, file) {
+                    var $img = $('<img class="thumbnail img-responsive img-preview"/>').attr('src', '../Content/Images/' + file);
+                    var $div = $('<div class="col-md-2"/>');
+                    $div.append($img);
+                    $('#imgContent').append($div);
+                    //(($('<img class="thumbnail img-responsive img-preview"/>').attr('src', '../Content/Images/' + file)).appendTo($('<p/>'))).appendTo('#imgContent');
+                });
+            }
+        });
+    });
+    </script>
 }

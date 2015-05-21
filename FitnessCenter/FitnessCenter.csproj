@@ -275,6 +275,7 @@
     <Content Include="Content\FileUpload\css\bootstrap\bootstrap.debug.css" />
     <Content Include="Content\FileUpload\css\jquery.fileupload-ui-noscript.css" />
     <Content Include="Content\FileUpload\css\jquery.fileupload-ui.css" />
+    <Content Include="Content\FileUpload\css\jquery.fileupload.css" />
     <Content Include="Content\FileUpload\css\jquery.image-gallery.debug.css" />
     <Content Include="Content\FileUpload\css\jqueryui\jquery.fileupload-jui.css" />
     <Content Include="Content\FileUpload\img\glyphicons-halflings-white.png" />
@@ -282,6 +283,7 @@
     <Content Include="Content\FileUpload\img\loading.gif" />
     <Content Include="Content\FileUpload\img\progressbar.gif" />
     <Content Include="Content\FileUpload\img\progressblue.gif" />
+    <Content Include="Content\portfolio.styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -294,12 +296,14 @@
     <Content Include="Scripts\FileUpload\bootstrap\bootstrap-image-gallery.debug.js" />
     <Content Include="Scripts\FileUpload\bootstrap\bootstrap.debug.js" />
     <Content Include="Scripts\FileUpload\canvas-to-blob.debug.js" />
+    <Content Include="Scripts\FileUpload\canvas-to-blob.min.js" />
     <Content Include="Scripts\FileUpload\cors\jquery.postmessage-transport.js" />
     <Content Include="Scripts\FileUpload\cors\jquery.xdr-transport.js" />
     <Content Include="Scripts\FileUpload\jquery.fileupload-angular.js" />
     <Content Include="Scripts\FileUpload\jquery.fileupload-audio.js" />
     <Content Include="Scripts\FileUpload\jquery.fileupload-fp.js" />
     <Content Include="Scripts\FileUpload\jquery.fileupload-image.js" />
+    <Content Include="Scripts\FileUpload\jquery.fileupload-ip.js" />
     <Content Include="Scripts\FileUpload\jquery.fileupload-jui.js" />
     <Content Include="Scripts\FileUpload\jquery.fileupload-process.js" />
     <Content Include="Scripts\FileUpload\jquery.fileupload-ui.js" />
@@ -313,7 +317,11 @@
     <Content Include="Scripts\FileUpload\jqueryui\jquery.fileupload.js" />
     <Content Include="Scripts\FileUpload\jqueryui\jquery.ui.widget.js" />
     <Content Include="Scripts\FileUpload\load-image.debug.js" />
+    <Content Include="Scripts\FileUpload\load-image.min.js" />
+    <Content Include="Scripts\FileUpload\locale.js" />
+    <Content Include="Scripts\FileUpload\main.js" />
     <Content Include="Scripts\FileUpload\tmpl.debug.js" />
+    <Content Include="Scripts\FileUpload\tmpl.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -383,6 +391,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

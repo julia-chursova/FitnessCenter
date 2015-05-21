@@ -3,6 +3,7 @@ using FitnessCenter.Entities;
 using FitnessCenter.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +12,8 @@ namespace FitnessCenter.Controllers
 {
     public class EmployeeController : Controller
     {
+        public List<string> Images { get; set; }
+
         // GET: Employee
         public ActionResult Index()
         {
@@ -53,6 +56,7 @@ namespace FitnessCenter.Controllers
 
         public ActionResult Create()
         {
+            Images = new List<string>();
             return View(new EmployeeViewModel() { Model = new Employee() });
         }
 
@@ -65,6 +69,15 @@ namespace FitnessCenter.Controllers
                 return RedirectToAction("Index");
             }
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult PostImg(HttpPostedFileBase upload)
+        {
+            var filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
+            upload.SaveAs(Path.Combine(Server.MapPath("~/Content/Images"), upload.FileName));
+
+            return Json(new { name = upload.FileName });
         }
     }
 }
