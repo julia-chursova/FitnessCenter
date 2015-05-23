@@ -11,27 +11,23 @@ namespace FitnessCenter.Entities
     {
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public decimal Cost { get; set; }
 
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
-        public DateTime ValidFrom { get; set; }
+        public ActivityType ActivityType { get; set; }
 
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
-        public DateTime ValidTo { get; set; }
+        public int ActivityTypeId { get; set; }
 
         [DataType(System.ComponentModel.DataAnnotations.DataType.Time)]
-        public DateTime AvailableFrom { get; set; }
+        public TimeSpan? AvailableFrom { get; set; }
 
         [DataType(System.ComponentModel.DataAnnotations.DataType.Time)]
-        public DateTime AvailableTo { get; set; }
-
-        public List<Activity> Activities { get; set; }
+        public TimeSpan? AvailableTo { get; set; }
 
         public Ticket()
         {
-            Activities = new List<Activity>();
         }
     }
 }

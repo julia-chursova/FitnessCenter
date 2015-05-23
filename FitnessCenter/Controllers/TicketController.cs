@@ -1,4 +1,5 @@
-﻿using FitnessCenter.Entities;
+﻿using FitnessCenter.DataAccess;
+using FitnessCenter.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,19 @@ namespace FitnessCenter.Controllers
         // GET: Ticket
         public ActionResult Index()
         {
-            return View(new List<Ticket>());
+            return View(TicketDal.GetTickets());
         }
 
         // GET: Ticket/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(TicketDal.GetTicket(id));
         }
 
         // GET: Ticket/Create
         public ActionResult Create()
         {
+            ViewBag.ActivityTypeId = new SelectList(ActivityTypeDal.GetActivityTypes(), "Id", "Name");
             return View(new Ticket());
         }
 
@@ -31,60 +33,49 @@ namespace FitnessCenter.Controllers
         [HttpPost]
         public ActionResult Create(Ticket model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                TicketDal.InsertTicket(model);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.ActivityTypeId = new SelectList(ActivityTypeDal.GetActivityTypes(), "Id", "Name");
+            return View(model);
         }
 
         // GET: Ticket/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var model = TicketDal.GetTicket(id);
+            var activities = ActivityTypeDal.GetActivityTypes();
+            ViewBag.ActivityTypeId = new SelectList(activities, "Id", "Name", activities.FirstOrDefault(a => a.Id == model.ActivityType.Id));
+            return View(model);
         }
 
         // POST: Ticket/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Ticket model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                TicketDal.UpdateTicket(model);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.ActivityTypeId = new SelectList(ActivityTypeDal.GetActivityTypes(), "Id", "Name", model.ActivityType.Id);
+            return View(model);
         }
 
         // GET: Ticket/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(TicketDal.GetTicket(id));
         }
 
         // POST: Ticket/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            TicketDal.DeleteTicket(id);
+            return RedirectToAction("Index");
         }
     }
 }
