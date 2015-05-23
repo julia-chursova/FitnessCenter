@@ -1,0 +1,5 @@
+﻿@model FitnessCenter.Models.SelectionActivityModel
+        @Html.CheckBoxFor(x => x.IsSelected)
+        @Html.LabelFor(x => x.IsSelected, @Model.Activity.Name)
+        @Html.HiddenFor(x => x.Activity.ID)
+        <br />

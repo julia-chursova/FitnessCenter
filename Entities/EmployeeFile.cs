@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FitnessCenter.Entities
 {
-    public class File
+    public class EmployeeFile
     {
-        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
 
         public string FileName { get; set; }
 

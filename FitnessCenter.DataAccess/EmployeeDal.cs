@@ -101,7 +101,7 @@ namespace FitnessCenter.DataAccess
             while (reader.Read())
             {
                 result.FileNames.Add(
-                    new File { FileName = reader.GetString(2), EmployeeId = id });
+                    new EmployeeFile { FileName = reader.GetString(2), Employee = result });
             }
 
             sqlConnection.Close();

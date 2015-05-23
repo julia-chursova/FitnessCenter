@@ -49,6 +49,74 @@ namespace FitnessCenter.DataAccess
             return result;
         }
 
+        public static List<Activity> GetActivitiesByType(int typeId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "GetActivitiesByType";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TypeId", Value = typeId });
+
+            sqlConnection.Open();
+
+            var reader = cmd.ExecuteReader();
+
+            List<Activity> result = new List<Activity>();
+
+            while (reader.Read())
+            {
+                result.Add(new Activity()
+                {
+                    ID = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    Description = !reader.IsDBNull(2) ? reader.GetString(2) : String.Empty
+                });
+            }
+
+            return result;
+        }
+
+        public static void InsertActivityToType(int activityId, int typeId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "InsertActivityToType";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ActivityId", Value = activityId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TypeId", Value = typeId });
+
+            sqlConnection.Open();
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public static void DeleteActivityToType(int activityId, int typeId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "DeleteActivityToType";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ActivityId", Value = activityId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TypeId", Value = typeId });
+
+            sqlConnection.Open();
+
+            cmd.ExecuteNonQuery();
+        }
+
         public static Activity GetActivity(int id)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
@@ -80,7 +148,7 @@ namespace FitnessCenter.DataAccess
             return result;
         }
 
-        public static void UpdateActivity(Activity employee)
+        public static void UpdateActivity(Activity activity)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -90,9 +158,9 @@ namespace FitnessCenter.DataAccess
             cmd.CommandTimeout = 600;
             cmd.Connection = sqlConnection;
 
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = employee.ID });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = employee.Name });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)employee.Description ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = activity.ID });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = activity.Name });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)activity.Description ?? DBNull.Value });
 
             sqlConnection.Open();
 
@@ -116,7 +184,7 @@ namespace FitnessCenter.DataAccess
             cmd.ExecuteNonQuery();
         }
 
-        public static void InsertActivity(Activity employee)
+        public static void InsertActivity(Activity activity)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -127,8 +195,8 @@ namespace FitnessCenter.DataAccess
             cmd.Connection = sqlConnection;
 
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = employee.Name });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)employee.Description ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = activity.Name });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)activity.Description ?? DBNull.Value });
 
             sqlConnection.Open();
 

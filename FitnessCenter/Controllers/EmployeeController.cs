@@ -12,7 +12,7 @@ namespace FitnessCenter.Controllers
 {
     public class EmployeeController : Controller
     {
-        static List<Entities.File> Files;
+        static List<Entities.EmployeeFile> Files;
 
         // GET: Employee
         public ActionResult Index()
@@ -23,7 +23,9 @@ namespace FitnessCenter.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(EmployeeDal.GetEmployee(id));
+            var employee = EmployeeDal.GetEmployee(id);
+            Files = employee.FileNames;
+            return View(employee);
         }
 
         [HttpPost]
@@ -51,12 +53,14 @@ namespace FitnessCenter.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(EmployeeDal.GetEmployee(id));
+            var employee = EmployeeDal.GetEmployee(id);
+            Files = employee.FileNames;
+            return View(employee);
         }
 
         public ActionResult Create()
         {
-            Files = new List<Entities.File>();
+            Files = new List<Entities.EmployeeFile>();
             return View(new Employee());
         }
 
@@ -77,10 +81,11 @@ namespace FitnessCenter.Controllers
         {
             var filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
             upload.SaveAs(Path.Combine(Server.MapPath("~/Content/Images"), filename));
-            var file = new Entities.File { FileName = filename };
+            var file = new Entities.EmployeeFile { FileName = filename };
             Files.Add(file);
+            //EmployeeDal.InsertEmployeeImage(filename, model.ID);
 
-            return PartialView("~/Views/Shared/DisplayTemplates/File.cshtml", file);
+            return PartialView("~/Views/Shared/EditorTemplates/EmployeeFile.cshtml", file);
         }
 
         [HttpPost]
@@ -94,11 +99,11 @@ namespace FitnessCenter.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteFile([Bind(Prefix = "filename")] Entities.File file)
+        public ActionResult DeleteFile([Bind(Prefix = "filename")] Entities.EmployeeFile file)
         {
             EmployeeDal.DeleteEmployeeImage(file.FileName);
 
-            return RedirectToAction("Edit", new { id = file.EmployeeId });
+            return RedirectToAction("Edit", new { id = file.Employee.ID });
         }
     }
 }

@@ -57,16 +57,6 @@
                 </div>
                 <div class="col-md-offset-2 col-md-10 row" id="imgContent">
                     @Html.DisplayFor(model => model.FileNames, new { parent = @Model })
-                    @*@for (int i = 0; i < Model.FileNames.Count; i++ )
-                    {
-                        @Html.HiddenFor(j => j.FileNames[i])
-                        <div class="col-md-offset-0 col-md-4">
-                            <img class="thumbnail img-responsive" src="@Model.FileNames[i].Path" />
-                            <button type="submit" class="btn btn-default">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </button>
-                        </div>
-                    }*@
                 </div>
             </div>
         }
@@ -86,7 +76,6 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/fileupload")
-    @Scripts.Render("~/bundles/knockout")
     <script type="text/javascript">
     $(function () {
         $('#fileupload').fileupload({
@@ -97,51 +86,4 @@
         });
     });
     </script>
-<script type="text/javascript">
-
-    function createViewModel() {
-
-        var createFile = function () {
-            return {
-                filename: ko.observable()
-            };
-        };
-
-        var addFile = function () {
-            files.push(createFile());
-        };
-
-        var removeFile = function () {
-            files.pop();
-        };
-        
-        var fileData = ko.observable();
-        var firstname = ko.observable();
-        var middlename = ko.observable();
-        var surname = ko.observable();
-        var description = ko.observable();
-        var files = ko.observableArray([createFile()]);
-
-        return {
-            firstname: firstname,
-            middlename : middlename,
-            surname: surname,
-            description: description,
-            fileData : fileData,
-            files: files,
-            addFile: addFile,
-            removeFile: removeFile
-        };
-
-    }
-
-    $(document).ready(function () {
-        var viewModel = createViewModel();
-        ko.applyBindings(viewModel);
-    });
-
-</script>
-
-
-
 }

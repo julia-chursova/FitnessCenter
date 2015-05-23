@@ -16,11 +16,11 @@ namespace FitnessCenter.Entities
         public string Surname { get; set; }
         public string MiddleName { get; set; }
         public string Description { get; set; }
-        public List<File> FileNames { get; set; }
+        public List<EmployeeFile> FileNames { get; set; }
 
         public Employee()
         {
-            FileNames = new List<File>();
+            FileNames = new List<EmployeeFile>();
         }
     }
 }
