@@ -1,0 +1,16 @@
+﻿@model FitnessCenter.Entities.File
+
+
+<div class="col-md-offset-0 col-md-4" id="@Model.FileName">
+    @Html.HiddenFor(model => model.FileName, new { data_bind = "value: filename, namePath: true" })
+    <img class="thumbnail img-responsive" src="@Model.Path2"/>
+@using (Html.BeginForm("DeleteFile", "Employee", FormMethod.Post, new { file = @Model.FileName }))
+        {
+    @Html.HiddenFor(model => model.FileName)
+    @Html.HiddenFor(model => model.EmployeeId)
+    <button type="submit" class="btn btn-default">
+        <span class="glyphicon glyphicon-remove">
+        </span>
+    </button>
+}
+</div>

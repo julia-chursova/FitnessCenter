@@ -12,34 +12,34 @@ namespace FitnessCenter.Controllers
 {
     public class EmployeeController : Controller
     {
-        public List<string> Images { get; set; }
+        static List<Entities.File> Files;
 
         // GET: Employee
         public ActionResult Index()
         {
-            var list = EmployeeDal.GetEmployees().Select(e => new EmployeeViewModel() { Model = e });
+            var list = EmployeeDal.GetEmployees();
             return View(list);
         }
 
         public ActionResult Edit(int id)
         {
-            return View(new EmployeeViewModel() { Model = EmployeeDal.GetEmployee(id) });
+            return View(EmployeeDal.GetEmployee(id));
         }
 
         [HttpPost]
-        public ActionResult Edit(EmployeeViewModel viewModel)
+        public ActionResult Edit(Employee model)
         {
             if (ModelState.IsValid)
             {
-                EmployeeDal.UpdateEmployee(viewModel.Model);
+                EmployeeDal.UpdateEmployee(model);
                 return RedirectToAction("Index");
             }
-            return View(viewModel);
+            return View(model);
         }
 
         public ActionResult Delete(int id)
         {
-            return View(new EmployeeViewModel() { Model = EmployeeDal.GetEmployee(id) });
+            return View(EmployeeDal.GetEmployee(id));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -51,33 +51,54 @@ namespace FitnessCenter.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(new EmployeeViewModel() { Model = EmployeeDal.GetEmployee(id) });
+            return View(EmployeeDal.GetEmployee(id));
         }
 
         public ActionResult Create()
         {
-            Images = new List<string>();
-            return View(new EmployeeViewModel() { Model = new Employee() });
+            Files = new List<Entities.File>();
+            return View(new Employee());
         }
 
         [HttpPost]
-        public ActionResult Create(EmployeeViewModel viewModel, HttpPostedFileBase upload)
+        public ActionResult Create(Employee model)
         {
             if (ModelState.IsValid)
             {
-                EmployeeDal.InsertEmployee(viewModel.Model);
+                model.FileNames = Files;
+                EmployeeDal.InsertEmployee(model);
                 return RedirectToAction("Index");
             }
-            return View(viewModel);
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult PostImg(HttpPostedFileBase upload)
+        public ActionResult PostImg(HttpPostedFileBase upload, Employee model)
         {
             var filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
-            upload.SaveAs(Path.Combine(Server.MapPath("~/Content/Images"), upload.FileName));
+            upload.SaveAs(Path.Combine(Server.MapPath("~/Content/Images"), filename));
+            var file = new Entities.File { FileName = filename };
+            Files.Add(file);
 
-            return Json(new { name = upload.FileName });
+            return PartialView("~/Views/Shared/DisplayTemplates/File.cshtml", file);
+        }
+
+        [HttpPost]
+        public ActionResult SaveImg(HttpPostedFileBase upload, Employee model)
+        {
+            var filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
+            upload.SaveAs(Path.Combine(Server.MapPath("~/Content/Images"), filename));
+            EmployeeDal.InsertEmployeeImage(filename, model.ID);
+
+            return RedirectToAction("Edit", model.ID);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteFile([Bind(Prefix = "filename")] Entities.File file)
+        {
+            EmployeeDal.DeleteEmployeeImage(file.FileName);
+
+            return RedirectToAction("Edit", new { id = file.EmployeeId });
         }
     }
 }

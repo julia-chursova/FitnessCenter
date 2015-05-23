@@ -26,12 +26,16 @@ namespace FitnessCenter
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/portfolio.styles.css"));
+                      "~/Content/portfolio.styles.css",
+                      "~/Content/file.input.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include(
                 "~/Scripts/FileUpload/jqueryui/jquery.ui.widget.js",
                 "~/Scripts/FileUpload/jquery.iframe-transport.js",
                 "~/Scripts/FileUpload/jquery.fileupload.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                "~/Scripts/knockout.js"));
         }
     }
 }

@@ -1,0 +1,60 @@
+﻿@model FitnessCenter.Entities.Ticket
+
+<div>
+    <h4>Ticket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValidFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValidFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValidTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValidTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableTo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

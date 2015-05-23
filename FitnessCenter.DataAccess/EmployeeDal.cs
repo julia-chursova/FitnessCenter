@@ -48,6 +48,8 @@ namespace FitnessCenter.DataAccess
                     });
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -81,6 +83,29 @@ namespace FitnessCenter.DataAccess
                 };
             }
 
+            sqlConnection.Close();
+
+            cmd = new SqlCommand();
+
+            cmd.CommandText = "GetEmployeeImages";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@EmployeeId", Value = id });
+
+            sqlConnection.Open();
+
+            reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                result.FileNames.Add(
+                    new File { FileName = reader.GetString(2), EmployeeId = id });
+            }
+
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -103,6 +128,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void DeleteEmployee(int id)
@@ -120,6 +147,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void InsertEmployee(Employee employee)
@@ -132,9 +161,14 @@ namespace FitnessCenter.DataAccess
             cmd.CommandTimeout = 600;
             cmd.Connection = sqlConnection;
 
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", 
-                Direction = ParameterDirection.Output, 
-                SqlDbType = SqlDbType.Int });
+            var id = new SqlParameter()
+            {
+                ParameterName = "@Id",
+                Direction = ParameterDirection.Output,
+                SqlDbType = SqlDbType.Int
+            };
+
+            cmd.Parameters.Add(id);
 
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = employee.Name });
             
@@ -149,6 +183,86 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            foreach (var image in employee.FileNames)
+            {
+                cmd = new SqlCommand();
+
+                cmd.CommandText = "InsertEmployeeImage";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandTimeout = 600;
+                cmd.Connection = sqlConnection;
+
+                cmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Id",
+                    Direction = ParameterDirection.Output,
+                    SqlDbType = SqlDbType.Int
+                });
+
+                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@EmployeeId", Value = (int)id.Value });
+
+                cmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@FileName",
+                    Value = image.FileName
+                });
+
+                cmd.ExecuteNonQuery();
+            }
+
+            sqlConnection.Close();
+        }
+
+        public static void InsertEmployeeImage(string path, int employeeId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "InsertEmployeeImage";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@Id",
+                Direction = ParameterDirection.Output,
+                SqlDbType = SqlDbType.Int
+            });
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@EmployeeId", Value = employeeId });
+
+            cmd.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@FileName",
+                Value = path
+            });
+
+            sqlConnection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        public static void DeleteEmployeeImage(string path)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "DeleteEmployeeImage";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@FileName", Value = path });
+
+            sqlConnection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
     }
 }

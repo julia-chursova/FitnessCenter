@@ -1,10 +1,10 @@
-﻿@model FitnessCenter.Models.EmployeeViewModel
+﻿@model FitnessCenter.Entities.Employee
 
 @{
     ViewBag.Title = "Редактировать";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать</h2>
 
 
 @using (Html.BeginForm())
@@ -15,47 +15,54 @@
         <h4>Сотрудник</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Model.ID)
+        @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Model.Name, "Имя", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, "Имя", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Model.Name, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Model.Surname, "Фамилия", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Surname, "Фамилия", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Model.Surname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Model.Surname, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Model.MiddleName, "Отчество", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MiddleName, "Отчество", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Model.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Model.MiddleName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Model.Description, "Описание", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Description, "Описание", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Model.Description, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
-       <!-- <div class="form-group">
-            @Html.LabelFor(model => model.File, "Фотография", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.Label("Фотографии", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.File, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
+                <span class="btn btn-default btn-file">
+                    Добавить файл <input data-bind="file: fileData" id="fileupload" type="file" name="upload" multiple="multiple">
+                </span>
             </div>
-        </div>-->
+            <div class="col-md-offset-2 col-md-10 row" id="imgContent">
+                @foreach (var filename in Model.FileNames)
+                {
+                    @Html.EditorFor(m => filename)
+                }
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -71,4 +78,16 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileupload")
+<script type="text/javascript">
+    $(function () {
+        $('#fileupload').fileupload({
+            url: '@Url.Action("PostImg","Employee")',
+            done: function (e, data) {
+                $('#imgContent').append(data.result);
+            }
+        });
+    });
+</script>
+
 }

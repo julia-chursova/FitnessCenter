@@ -1,0 +1,8 @@
+﻿@model FitnessCenter.Entities.File
+
+
+<div class="col-md-offset-0 col-md-4" id="@Model.FileName">
+    @Html.HiddenFor(model => model.FileName, new { data_bind = "value: filename, namePath: true" })
+    <img class="thumbnail img-responsive" src="@Model.Path" />
+    </div>
+
