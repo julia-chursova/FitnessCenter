@@ -26,9 +26,10 @@
                     <li>@Html.ActionLink("Сотрудники", "Index", "Employee")</li>
                     <li>@Html.ActionLink("Залы", "Index", "Room")</li>
                     <li>@Html.ActionLink("Занятия/услуги", "Index", "Activity")</li>
-                    <li>@Html.ActionLink("Типы занятий", "Index", "ActivityType")</li>
+                    @if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager))
+                    { <li>@Html.ActionLink("Типы занятий", "Index", "ActivityType")</li>}
                     <li>@Html.ActionLink("Клубные карты", "Index", "Ticket")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

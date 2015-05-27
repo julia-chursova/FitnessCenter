@@ -2,26 +2,42 @@
 
 @{
     ViewBag.Title = "Сотрудники";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Список сотрудников</h2>
+<h2>Сотрудники</h2>
 
 <p>
-    @Html.ActionLink("Добавить", "Create")
+    @Html.ActionLink("Создать", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            Имя
+            @Html.DisplayNameFor(model => model.Surname)
         </th>
         <th>
-            Отчество
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            Фамилия
+            @Html.DisplayNameFor(model => model.MiddleName)
         </th>
         <th>
-            Описание
+            @Html.DisplayNameFor(model => model.Salary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirthdayDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AcceptanceDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LeaveDate)
         </th>
         <th></th>
     </tr>
@@ -29,21 +45,36 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MiddleName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Surname)
+            @Html.DisplayFor(modelItem => item.Salary)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.DisplayFor(modelItem => item.Address)
         </td>
         <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Подробности", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirthdayDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AcceptanceDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LeaveDate)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Подробности", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.ID })
         </td>
     </tr>
 }

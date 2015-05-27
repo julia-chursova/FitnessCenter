@@ -42,10 +42,13 @@
   <ItemGroup>
     <Compile Include="ActivityDal.cs" />
     <Compile Include="ActivityTypeDal.cs" />
+    <Compile Include="ClientDal.cs" />
     <Compile Include="EmployeeDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoomDal.cs" />
     <Compile Include="TicketDal.cs" />
+    <Compile Include="TicketOrderDal.cs" />
+    <Compile Include="UserDal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

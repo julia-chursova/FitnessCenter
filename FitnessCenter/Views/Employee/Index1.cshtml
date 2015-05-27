@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FitnessCenter.Entities.Employee>
+
+@{
+    ViewBag.Title = "Сотрудники";
+}
+
+<h2>Список сотрудников</h2>
+
+<p>
+   @if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){ @Html.ActionLink("Добавить", "Create")}
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Имя
+        </th>
+        <th>
+            Отчество
+        </th>
+        <th>
+            Фамилия
+        </th>
+        <th>
+            Описание
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MiddleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){@Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) } |
+            @Html.ActionLink("Подробности", "Details", new { id = item.ID }) |
+            @if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){@Html.ActionLink("Удалить", "Delete", new { id = item.ID })}
+        </td>
+    </tr>
+}
+
+</table>
+
+<p>
+    @if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager))
+    {@Html.ActionLink("Экспорт", "Export")}
+</p>

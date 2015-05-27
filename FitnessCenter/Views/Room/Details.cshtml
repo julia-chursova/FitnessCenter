@@ -28,6 +28,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){@Html.ActionLink("Редактировать", "Edit", new { id = Model.ID })} |
     @Html.ActionLink("Назад", "Index")
 </p>

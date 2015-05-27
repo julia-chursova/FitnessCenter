@@ -1,11 +1,13 @@
 ﻿@model FitnessCenter.Entities.Ticket
 
 <div>
-    <h4>Ticket</h4>
+    <h4>Клубная карта</h4>
     <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Название
         </dt>
 
         <dd>
@@ -13,7 +15,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Cost)
+            Стоимость
         </dt>
 
         <dd>
@@ -21,7 +23,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ActivityType.Name)
+            Тип занятий
         </dt>
 
         <dd>
@@ -29,7 +31,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AvailableFrom)
+            Время посещения (с)
         </dt>
 
         <dd>
@@ -37,7 +39,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AvailableTo)
+            Время посещения (по)
         </dt>
 
         <dd>
@@ -47,6 +49,8 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new {  id = Model.Id  }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){@Html.ActionLink("Редактировать", "Edit", new {  id = Model.Id  })} |
+    @if (Request.IsAuthenticated)
+    { @Html.ActionLink("Заказать", "Order", new { id = Model.Id }, null)} |
+    @Html.ActionLink("Назад", "Index")
 </p>

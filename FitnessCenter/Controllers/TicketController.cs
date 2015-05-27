@@ -22,6 +22,22 @@ namespace FitnessCenter.Controllers
             return View(TicketDal.GetTicket(id));
         }
 
+        // GET: Ticket/Order/5
+        public ActionResult Order(int id)
+        {
+            var client = ClientDal.GetClientByLogin(HttpContext.User.Identity.Name);
+            if (client != null)
+            {
+                TicketOrderDal.InsertTicketOrder(id, client.Id);
+                ModelState.AddModelError("", "Заказ клубной карты осуществлен");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Невозможно заказать клубную карту. Войдите в систему или зарегистрируйте нового пользователя.");
+            }
+            return View("Details", TicketDal.GetTicket(id));
+        }
+
         // GET: Ticket/Create
         public ActionResult Create()
         {

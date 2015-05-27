@@ -39,6 +39,13 @@ namespace FitnessCenter.Controllers
             return View(model);
         }
 
+        public FilePathResult Export()
+        {
+            string path = Path.Combine(Server.MapPath("~/Content/Documents"), "Сотрудники.doc");
+            EmployeeExporter.GetDocument(path);
+            return File(path, "text/plain", "Сотрудники.doc");
+        }
+
         public ActionResult Delete(int id)
         {
             return View(EmployeeDal.GetEmployee(id));
@@ -82,8 +89,14 @@ namespace FitnessCenter.Controllers
             var filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
             upload.SaveAs(Path.Combine(Server.MapPath("~/Content/Images"), filename));
             var file = new Entities.EmployeeFile { FileName = filename };
-            Files.Add(file);
-            //EmployeeDal.InsertEmployeeImage(filename, model.ID);
+            if (model.ID > 0)
+            {
+                EmployeeDal.InsertEmployeeImage(filename, model.ID);
+            }
+            else
+            {
+                Files.Add(file);
+            }
 
             return PartialView("~/Views/Shared/EditorTemplates/EmployeeFile.cshtml", file);
         }

@@ -1,0 +1,89 @@
+﻿@model FitnessCenter.Entities.Employee
+
+@{
+    ViewBag.Title = "Создать";
+}
+
+<h2>Создать</h2>
+
+@using (Html.BeginForm("Create", "Employee", FormMethod.Post, new {enctype = "multipart/form-data"}) )
+{
+    
+    
+    <div class="form-horizontal">
+        <h4>Сотрудник</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, "Имя", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { data_bind = "value: firstname", htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Surname, "Фамилия", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Surname, new { data_bind = "value: secondname", htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MiddleName, "Отчество", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MiddleName, new { data_bind = "value: middlename", htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, "Описание", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { data_bind = "value: description", htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @using (Html.BeginForm("PostImg", "Employee", FormMethod.Post, new { enctype = "multipart/form-data", model = Model }))
+        {
+            <div class="form-group">
+                @Html.Label("Фотографии", new { @class = "control-label col-md-2" })                
+                <div class="col-md-10">
+                    <span class="btn btn-default btn-file">
+                        Добавить файл <input data-bind="file: fileData" id="fileupload" type="file" name="upload" multiple="multiple">
+</span>                    
+                </div>
+                <div class="col-md-offset-2 col-md-10 row" id="imgContent">
+                    @Html.DisplayFor(model => model.FileNames, new { parent = @Model })
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Создать" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div> 
+    @Html.ActionLink("Назад", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileupload")
+    <script type="text/javascript">
+    $(function () {
+        $('#fileupload').fileupload({
+            url: '@Url.Action("PostImg","Employee")',
+            done: function (e, data) {                    
+                $('#imgContent').append(data.result);
+            }
+        });
+    });
+    </script>
+}
