@@ -19,7 +19,10 @@ namespace FitnessCenter.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(ActivityDal.GetActivity(id));
+            var activity = ActivityDal.GetActivity(id);
+            var activities = ActivityTypeDal.GetActivityTypes();
+            ViewBag.TypeId = new SelectList(activities, "Id", "Name", activities.FirstOrDefault(a => a.Id == activity.TypeId));
+            return View(activity);
         }
 
         [HttpPost]
@@ -30,6 +33,8 @@ namespace FitnessCenter.Controllers
                 ActivityDal.UpdateActivity(activity);
                 return RedirectToAction("Index");
             }
+            var activities = ActivityTypeDal.GetActivityTypes();
+            ViewBag.TypeId = new SelectList(activities, "Id", "Name", activities.FirstOrDefault(a => a.Id == activity.TypeId));
             return View(activity);
         }
 
@@ -52,6 +57,7 @@ namespace FitnessCenter.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.TypeId = new SelectList(ActivityTypeDal.GetActivityTypes(), "Id", "Name");
             return View(new Activity());
         }
 
@@ -63,6 +69,7 @@ namespace FitnessCenter.Controllers
                 ActivityDal.InsertActivity(activity);
                 return RedirectToAction("Index");
             }
+            ViewBag.TypeId = new SelectList(ActivityTypeDal.GetActivityTypes(), "Id", "Name");
             return View(activity);
         }
     }

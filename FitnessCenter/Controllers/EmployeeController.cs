@@ -94,7 +94,7 @@ namespace FitnessCenter.Controllers
         {
             var filename = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
             upload.SaveAs(Path.Combine(Server.MapPath("~/Content/Images"), filename));
-            var file = new Entities.EmployeeFile { FileName = filename };
+            var file = new Entities.EmployeeFile { FileName = filename, Employee = model };
             if (model.ID > 0)
             {
                 EmployeeDal.InsertEmployeeImage(filename, model.ID);
@@ -103,7 +103,7 @@ namespace FitnessCenter.Controllers
             {
                 Files.Add(file);
             }
-
+            ViewData.TemplateInfo.HtmlFieldPrefix = "filename";
             return PartialView("~/Views/Shared/EditorTemplates/EmployeeFile.cshtml", file);
         }
 

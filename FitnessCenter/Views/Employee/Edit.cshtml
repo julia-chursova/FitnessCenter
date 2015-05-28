@@ -13,7 +13,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Employee</h4>
+        <h4>Сотрудник</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
@@ -114,26 +114,32 @@
             </div>
         </div>
 
-        @using (Html.BeginForm("PostImg", "Employee", FormMethod.Post, new { enctype = "multipart/form-data", model = Model }))
-        {
+        
             <div class="form-group">
                 @Html.Label("Фотографии", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <span class="btn btn-default btn-file">
-                        Добавить файл <input data-bind="file: fileData" id="fileupload" type="file" name="upload" multiple="multiple">
-                    </span>
+                    @using (Html.BeginForm("PostImg", "Employee", FormMethod.Post, new { enctype = "multipart/form-data", model = Model }))
+                    {
+                        <span class="btn btn-default btn-file">
+                            Добавить файл <input data-bind="file: fileData" id="fileupload" type="file" name="upload" multiple="multiple">
+                        </span>
+                    }
                 </div>
                 <div class="col-md-offset-2 col-md-10 row" id="imgContent">
-                    @Html.DisplayFor(model => model.FileNames, new { parent = @Model })
+                    @foreach (var filename in Model.FileNames)
+                    {
+                        @Html.EditorFor(m => filename)
+                    }
                 </div>
             </div>
-        }
+        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
+
     </div>
 }
 

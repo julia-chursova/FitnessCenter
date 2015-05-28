@@ -16,6 +16,7 @@ namespace FitnessCenter.Entities
         public string Name { get; set; }
 
         [Display(Name = "Описание")]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [Required]

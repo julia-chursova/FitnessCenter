@@ -21,36 +21,15 @@ namespace FitnessCenter.Controllers
         public ActionResult Edit(int id)
         {
             var activityType = ActivityTypeDal.GetActivityType(id);
-            var model = new ActivityTypeModel()
-            {
-                ActivityType = activityType,
-                Activities = ActivityDal.GetActivities().Select(a => new SelectionActivityModel()
-                {
-                    Activity = a,
-                    IsSelected = activityType.Activities.Any(e => e.ID == a.ID)
-                }).ToList()
-            };
-            return View(model);
+            return View(activityType);
         }
 
         [HttpPost]
-        public ActionResult Edit(ActivityTypeModel model)
+        public ActionResult Edit(ActivityType model)
         {
             if (ModelState.IsValid)
             {
-                var activityType = ActivityTypeDal.GetActivityType(model.ActivityType.Id);
-                ActivityTypeDal.UpdateActivityType(model.ActivityType);
-                foreach (var selectionActivity in model.Activities)
-                {
-                    if (selectionActivity.IsSelected && !activityType.Activities.Any(a => a.ID == selectionActivity.Activity.ID))
-                    {
-                        ActivityDal.InsertActivityToType(selectionActivity.Activity.ID, model.ActivityType.Id);
-                    }
-                    if (!selectionActivity.IsSelected && activityType.Activities.Any(a => a.ID == selectionActivity.Activity.ID))
-                    {
-                        ActivityDal.DeleteActivityToType(selectionActivity.Activity.ID, model.ActivityType.Id);
-                    }
-                }
+                ActivityTypeDal.UpdateActivityType(model);                
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -70,46 +49,21 @@ namespace FitnessCenter.Controllers
 
         public ActionResult Details(int id)
         {
-            var activityType = ActivityTypeDal.GetActivityType(id);
-            var model = new ActivityTypeModel()
-            {
-                ActivityType = activityType,
-                Activities = ActivityDal.GetActivities().Select(a => new SelectionActivityModel() 
-                { 
-                    Activity = a,
-                    IsSelected = activityType.Activities.Any(e => e.ID == a.ID)
-                }).ToList()
-            };
+            var activityType = ActivityTypeDal.GetActivityType(id);            
             return View(activityType);
         }
 
         public ActionResult Create()
-        {
-            var model = new ActivityTypeModel()
-            {
-                ActivityType = new ActivityType(),
-                Activities = ActivityDal.GetActivities().Select(a => new SelectionActivityModel()
-                {
-                    Activity = a,
-                    IsSelected = false
-                }).ToList()
-            };
-            return View(model);
+        {            
+            return View(new ActivityType());
         }
 
         [HttpPost]
-        public ActionResult Create(ActivityTypeModel model)
+        public ActionResult Create(ActivityType model)
         {
             if (ModelState.IsValid)
             {
-                int typeId = ActivityTypeDal.InsertActivityType(model.ActivityType);
-                foreach (var selectionActivity in model.Activities)
-                {
-                    if (selectionActivity.IsSelected)
-                    {
-                        ActivityDal.InsertActivityToType(selectionActivity.Activity.ID, typeId);
-                    }
-                }
+                int typeId = ActivityTypeDal.InsertActivityType(model);
                 return RedirectToAction("Index");
             }
             return View(model);

@@ -104,12 +104,7 @@
         </dt>
 
         <dd>
-            @for (int i = 0; i < Model.FileNames.Count; i++)
-            {
-                <div class="col-md-offset-0 col-md-4">
-                    <img class="thumbnail img-responsive" src="@Model.FileNames[i].Path2" />
-                </div>
-            }
+            @Html.DisplayFor(model => model.FileNames, new { parent = @Model })
         </dd>
 
     </dl>

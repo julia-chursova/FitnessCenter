@@ -25,9 +25,17 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
 
+        <dt>
+            @Html.Label("Фотографии", new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileNames, new { parent = @Model })
+        </dd>
+
     </dl>
 </div>
 <p>
-    @if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){@Html.ActionLink("Редактировать", "Edit", new { id = Model.ID })} |
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Назад", "Index")
 </p>

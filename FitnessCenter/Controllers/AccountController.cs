@@ -78,7 +78,7 @@ namespace FitnessCenter.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -129,25 +129,6 @@ namespace FitnessCenter.Controllers
                     return View(model);
                 }
             }
-
-            // Сбои при входе не приводят к блокированию учетной записи
-            // Чтобы ошибки при вводе пароля инициировали блокирование учетной записи, замените на shouldLockout: true
-            //var result = await SignInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, shouldLockout: false);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.RequiresVerification:
-            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Неудачная попытка входа.");
-            //        return View(model);
-            //}
-
-            return RedirectToLocal(returnUrl);
         }
 
         //
@@ -162,7 +143,7 @@ namespace FitnessCenter.Controllers
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {

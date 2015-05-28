@@ -43,8 +43,8 @@ namespace FitnessCenter.DataAccess
                     ID = reader.GetInt32(0),
                     Name = reader.GetString(2),
                     Description = !reader.IsDBNull(1) ? reader.GetString(1) : String.Empty,
-                    Capacity = !reader.IsDBNull(2) ? (int?)reader.GetInt32(2) : null,
-                    Area = !reader.IsDBNull(3) ? (decimal?)reader.GetDecimal(3) : null
+                    Capacity = !reader.IsDBNull(3) ? (int?)reader.GetInt32(3) : null,
+                    Area = !reader.IsDBNull(4) ? (decimal?)reader.GetDecimal(4) : null
                 });
             }
 
@@ -76,10 +76,33 @@ namespace FitnessCenter.DataAccess
                     ID = reader.GetInt32(0),
                     Name = reader.GetString(2),
                     Description = !reader.IsDBNull(1) ? reader.GetString(1) : String.Empty,
-                    Capacity = !reader.IsDBNull(2) ? (int?)reader.GetInt32(2) : null,
-                    Area = !reader.IsDBNull(3) ? (decimal?)reader.GetDecimal(3) : null
+                    Capacity = !reader.IsDBNull(4) ? (int?)reader.GetInt32(4) : null,
+                    Area = !reader.IsDBNull(4) ? (decimal?)reader.GetDecimal(4) : null
                 };
             }
+
+            sqlConnection.Close();
+
+            cmd = new SqlCommand();
+
+            cmd.CommandText = "GetRoomImages";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@RoomId", Value = id });
+
+            sqlConnection.Open();
+
+            reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                result.FileNames.Add(
+                    new RoomFile { FileName = reader.GetString(1), Room = result });
+            }
+
+            sqlConnection.Close();
 
             return result;
         }
@@ -122,7 +145,7 @@ namespace FitnessCenter.DataAccess
             cmd.ExecuteNonQuery();
         }
 
-        public static void InsertRoom(Room employee)
+        public static void InsertRoom(Room room)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -132,15 +155,101 @@ namespace FitnessCenter.DataAccess
             cmd.CommandTimeout = 600;
             cmd.Connection = sqlConnection;
 
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = employee.Name });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)employee.Description ?? DBNull.Value });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Capacity", Value = (object)employee.Capacity ?? DBNull.Value });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Area", Value = (object)employee.Area ?? DBNull.Value });
+            var id = new SqlParameter()
+            {
+                ParameterName = "@Id",
+                Direction = ParameterDirection.Output,
+                SqlDbType = SqlDbType.Int
+            };
+            cmd.Parameters.Add(id);
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = room.Name });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)room.Description ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Capacity", Value = (object)room.Capacity ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Area", Value = (object)room.Area ?? DBNull.Value });
 
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            foreach (var image in room.FileNames)
+            {
+                cmd = new SqlCommand();
+
+                cmd.CommandText = "InsertRoomImage";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandTimeout = 600;
+                cmd.Connection = sqlConnection;
+
+                cmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@Id",
+                    Direction = ParameterDirection.Output,
+                    SqlDbType = SqlDbType.Int
+                });
+
+                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@RoomId", Value = (int)id.Value });
+
+                cmd.Parameters.Add(new SqlParameter()
+                {
+                    ParameterName = "@FileName",
+                    Value = image.FileName
+                });
+
+                cmd.ExecuteNonQuery();
+            }
+
+            sqlConnection.Close();
+        }
+
+        public static void InsertRoomImage(string path, int roomId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "InsertRoomImage";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@Id",
+                Direction = ParameterDirection.Output,
+                SqlDbType = SqlDbType.Int
+            });
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@RoomId", Value = roomId });
+
+            cmd.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@FileName",
+                Value = path
+            });
+
+            sqlConnection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        public static void DeleteRoomImage(string path)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "DeleteRoomImage";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@FileName", Value = path });
+
+            sqlConnection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
     }
 }
