@@ -21,18 +21,16 @@ namespace FitnessCenter.Entities
 
         [Display(Name = "Отчество")]
         public string MiddleName { get; set; }
-
-        [Required]
-        [Display(Name = "Должность")]
+        
         public EmployeePosition Position { get; set; }
 
         [Required]
         [Display(Name = "Должность")]
         public int PositionId { get; set; }
 
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
         [Display(Name = "Зарплата")]
-        public decimal Salary { get; set; }
+        public decimal? Salary { get; set; }
 
         [Display(Name = "Адрес")]
         public string Address { get; set; }
@@ -42,21 +40,24 @@ namespace FitnessCenter.Entities
         [Phone]
         public string Phone { get; set; }
 
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Дата рождения")]
-        public DateTime BirthdayDate { get; set; }
+        public DateTime? BirthdayDate { get; set; }
 
         [Display(Name = "Образование")]
         public string Education { get; set; }
 
         [Required]
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Дата приема на работу")]
         public DateTime AcceptanceDate { get; set; }
 
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Дата увольнения")]
-        public DateTime LeaveDate { get; set; }        
+        public DateTime? LeaveDate { get; set; }        
 
         [DataType(System.ComponentModel.DataAnnotations.DataType.MultilineText)]
         [Display(Name = "Описание")]

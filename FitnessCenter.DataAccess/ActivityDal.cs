@@ -42,7 +42,10 @@ namespace FitnessCenter.DataAccess
                 {
                     ID = reader.GetInt32(0),
                     Name = reader.GetString(1),
-                    Description = !reader.IsDBNull(2) ? reader.GetString(2) : String.Empty
+                    Description = !reader.IsDBNull(2) ? reader.GetString(2) : String.Empty,
+                    TypeId = reader.GetInt32(3),
+                    Type = ActivityTypeDal.GetActivityType(reader.GetInt32(3)),
+                    Duration = !reader.IsDBNull(4) ? (TimeSpan?)reader.GetTimeSpan(4) : null
                 });
             }
 
@@ -73,48 +76,14 @@ namespace FitnessCenter.DataAccess
                 {
                     ID = reader.GetInt32(0),
                     Name = reader.GetString(1),
-                    Description = !reader.IsDBNull(2) ? reader.GetString(2) : String.Empty
+                    Description = !reader.IsDBNull(2) ? reader.GetString(2) : String.Empty,
+                    TypeId = reader.GetInt32(3),
+                    Type = ActivityTypeDal.GetActivityType(reader.GetInt32(3)),
+                    Duration = !reader.IsDBNull(4) ? (TimeSpan?)reader.GetTimeSpan(4) : null
                 });
             }
 
             return result;
-        }
-
-        public static void InsertActivityToType(int activityId, int typeId)
-        {
-            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = "InsertActivityToType";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandTimeout = 600;
-            cmd.Connection = sqlConnection;
-
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ActivityId", Value = activityId });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TypeId", Value = typeId });
-
-            sqlConnection.Open();
-
-            cmd.ExecuteNonQuery();
-        }
-
-        public static void DeleteActivityToType(int activityId, int typeId)
-        {
-            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = "DeleteActivityToType";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandTimeout = 600;
-            cmd.Connection = sqlConnection;
-
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ActivityId", Value = activityId });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TypeId", Value = typeId });
-
-            sqlConnection.Open();
-
-            cmd.ExecuteNonQuery();
         }
 
         public static Activity GetActivity(int id)
@@ -141,7 +110,10 @@ namespace FitnessCenter.DataAccess
                 {
                     ID = reader.GetInt32(0),
                     Name = reader.GetString(1),
-                    Description = !reader.IsDBNull(2) ? reader.GetString(2) : String.Empty
+                    Description = !reader.IsDBNull(2) ? reader.GetString(2) : String.Empty,
+                    TypeId = reader.GetInt32(3),
+                    Type = ActivityTypeDal.GetActivityType(reader.GetInt32(3)),
+                    Duration = !reader.IsDBNull(4) ? (TimeSpan?)reader.GetTimeSpan(4) : null
                 };
             }
 
@@ -161,6 +133,8 @@ namespace FitnessCenter.DataAccess
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = activity.ID });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = activity.Name });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)activity.Description ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TypeId", Value = activity.TypeId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Duration", Value = (object)activity.Duration ?? DBNull.Value });
 
             sqlConnection.Open();
 
@@ -197,6 +171,8 @@ namespace FitnessCenter.DataAccess
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = activity.Name });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)activity.Description ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TypeId", Value = activity.TypeId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Duration", Value = (object)activity.Duration ?? DBNull.Value });
 
             sqlConnection.Open();
 

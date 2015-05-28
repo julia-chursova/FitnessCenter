@@ -25,6 +25,8 @@ namespace FitnessCenter.Controllers
         {
             var employee = EmployeeDal.GetEmployee(id);
             Files = employee.FileNames;
+            var positions = EmployeePositionDal.GetPositions();
+            ViewBag.PositionId = new SelectList(positions, "Id", "Name", positions.FirstOrDefault(a => a.Id == employee.PositionId));
             return View(employee);
         }
 
@@ -36,6 +38,8 @@ namespace FitnessCenter.Controllers
                 EmployeeDal.UpdateEmployee(model);
                 return RedirectToAction("Index");
             }
+            var positions = EmployeePositionDal.GetPositions();
+            ViewBag.PositionId = new SelectList(positions, "Id", "Name", positions.FirstOrDefault(a => a.Id == model.PositionId));
             return View(model);
         }
 
@@ -68,6 +72,7 @@ namespace FitnessCenter.Controllers
         public ActionResult Create()
         {
             Files = new List<Entities.EmployeeFile>();
+            ViewBag.PositionId = new SelectList(EmployeePositionDal.GetPositions(), "Id", "Name");
             return View(new Employee());
         }
 
@@ -80,6 +85,7 @@ namespace FitnessCenter.Controllers
                 EmployeeDal.InsertEmployee(model);
                 return RedirectToAction("Index");
             }
+            ViewBag.PositionId = new SelectList(EmployeePositionDal.GetPositions(), "Id", "Name");
             return View(model);
         }
 

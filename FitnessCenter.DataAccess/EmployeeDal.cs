@@ -44,7 +44,16 @@ namespace FitnessCenter.DataAccess
                         Name = reader.GetString(1),
                         Surname = reader.GetString(2),
                         MiddleName = !reader.IsDBNull(3) ? reader.GetString(3) : String.Empty,
-                        Description = !reader.IsDBNull(4) ? reader.GetString(4) : String.Empty
+                        Description = !reader.IsDBNull(4) ? reader.GetString(4) : String.Empty,
+                        Salary = !reader.IsDBNull(5) ? (decimal?)reader.GetDecimal(5) : null,
+                        PositionId = reader.GetInt32(6),
+                        Position = EmployeePositionDal.GetPosition(reader.GetInt32(6)),
+                        Address = !reader.IsDBNull(7) ? reader.GetString(7) : String.Empty,
+                        Phone = !reader.IsDBNull(8) ? reader.GetString(8) : String.Empty,
+                        BirthdayDate = !reader.IsDBNull(9) ? (DateTime?)reader.GetDateTime(9) : null,
+                        AcceptanceDate = reader.GetDateTime(10),
+                        LeaveDate = !reader.IsDBNull(11) ? (DateTime?)reader.GetDateTime(11) : null,
+                        Education = !reader.IsDBNull(12) ? reader.GetString(12) : String.Empty
                     });
             }
 
@@ -79,7 +88,16 @@ namespace FitnessCenter.DataAccess
                     Name = reader.GetString(1),
                     Surname = reader.GetString(2),
                     MiddleName = !reader.IsDBNull(3) ? reader.GetString(3) : String.Empty,
-                    Description = !reader.IsDBNull(4) ? reader.GetString(4) : String.Empty
+                    Description = !reader.IsDBNull(4) ? reader.GetString(4) : String.Empty,
+                    Salary = !reader.IsDBNull(5) ? (decimal?)reader.GetDecimal(5) : null,
+                    PositionId = reader.GetInt32(6),
+                    Position = EmployeePositionDal.GetPosition(reader.GetInt32(6)),
+                    Address = !reader.IsDBNull(7) ? reader.GetString(7) : String.Empty,
+                    Phone = !reader.IsDBNull(8) ? reader.GetString(8) : String.Empty,
+                    BirthdayDate = !reader.IsDBNull(9) ? (DateTime?)reader.GetDateTime(9) : null,
+                    AcceptanceDate = reader.GetDateTime(10),
+                    LeaveDate = !reader.IsDBNull(11) ? (DateTime?)reader.GetDateTime(11) : null,
+                    Education = !reader.IsDBNull(12) ? reader.GetString(12) : String.Empty
                 };
             }
 
@@ -124,7 +142,15 @@ namespace FitnessCenter.DataAccess
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Surname", Value = employee.Surname });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@MiddleName", Value = (object)employee.MiddleName ?? DBNull.Value });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)employee.Description ?? DBNull.Value });
-            
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Salary", Value = (object)employee.Salary ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@PositionId", Value = employee.PositionId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Address", Value = (object)employee.Address ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Phone", Value = (object)employee.Phone ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@BirthdayDate", Value = (object)employee.BirthdayDate ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@AcceptanceDate", Value = employee.AcceptanceDate });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@LeaveDate", Value = (object)employee.LeaveDate ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Education", Value = (object)employee.Education ?? DBNull.Value });
+                       
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
@@ -179,6 +205,15 @@ namespace FitnessCenter.DataAccess
                 Value = (object)employee.MiddleName ?? DBNull.Value });
 
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)employee.Description ?? DBNull.Value });
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Salary", Value = (object)employee.Salary ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@PositionId", Value = employee.PositionId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Address", Value = (object)employee.Address ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Phone", Value = (object)employee.Phone ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@BirthdayDate", Value = (object)employee.BirthdayDate ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@AcceptanceDate", Value = employee.AcceptanceDate });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@LeaveDate", Value = (object)employee.LeaveDate ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Education", Value = (object)employee.Education ?? DBNull.Value });
 
             sqlConnection.Open();
 

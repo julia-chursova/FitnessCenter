@@ -41,18 +41,9 @@ namespace FitnessCenter.DataAccess
                 result.Add(new ActivityType()
                 {
                     Id = reader.GetInt32(0),
-                    Name = reader.GetString(1)
+                    Name = reader.GetString(1),
+                    Description = !reader.IsDBNull(2) ? reader.GetString(2) : String.Empty
                 });
-            }
-
-            foreach (var type in result)
-            {
-                var activities = ActivityDal.GetActivitiesByType(type.Id);
-                foreach (var activity in activities)
-                {
-                    activity.Type = type;
-                    type.Activities.Add(activity);
-                }
             }
 
             return result;
@@ -82,14 +73,8 @@ namespace FitnessCenter.DataAccess
                 {
                     Id = reader.GetInt32(0),
                     Name = reader.GetString(1),
+                    Description = !reader.IsDBNull(2) ? reader.GetString(2) : String.Empty
                 };
-
-                var activities = ActivityDal.GetActivitiesByType(result.Id);
-                foreach (var activity in activities)
-                {
-                    activity.Type = result;
-                    result.Activities.Add(activity);
-                }
             }
 
             return result;
@@ -107,6 +92,7 @@ namespace FitnessCenter.DataAccess
 
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = activityType.Id });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = activityType.Name });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)activityType.Description ?? DBNull.Value });
 
             sqlConnection.Open();
 
@@ -130,7 +116,7 @@ namespace FitnessCenter.DataAccess
             cmd.ExecuteNonQuery();
         }
 
-        public static int InsertActivityType(ActivityType employee)
+        public static int InsertActivityType(ActivityType activityType)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -143,7 +129,8 @@ namespace FitnessCenter.DataAccess
             var id = new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int };
 
             cmd.Parameters.Add(id);
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = employee.Name });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = activityType.Name });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)activityType.Description ?? DBNull.Value });
 
             sqlConnection.Open();
 

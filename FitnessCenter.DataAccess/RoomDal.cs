@@ -42,7 +42,9 @@ namespace FitnessCenter.DataAccess
                 {
                     ID = reader.GetInt32(0),
                     Name = reader.GetString(2),
-                    Description = !reader.IsDBNull(1) ? reader.GetString(1) : String.Empty
+                    Description = !reader.IsDBNull(1) ? reader.GetString(1) : String.Empty,
+                    Capacity = !reader.IsDBNull(2) ? (int?)reader.GetInt32(2) : null,
+                    Area = !reader.IsDBNull(3) ? (decimal?)reader.GetDecimal(3) : null
                 });
             }
 
@@ -73,7 +75,9 @@ namespace FitnessCenter.DataAccess
                 {
                     ID = reader.GetInt32(0),
                     Name = reader.GetString(2),
-                    Description = !reader.IsDBNull(1) ? reader.GetString(1) : String.Empty
+                    Description = !reader.IsDBNull(1) ? reader.GetString(1) : String.Empty,
+                    Capacity = !reader.IsDBNull(2) ? (int?)reader.GetInt32(2) : null,
+                    Area = !reader.IsDBNull(3) ? (decimal?)reader.GetDecimal(3) : null
                 };
             }
 
@@ -93,6 +97,8 @@ namespace FitnessCenter.DataAccess
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = employee.ID });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = employee.Name });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)employee.Description ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Capacity", Value = (object)employee.Capacity ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Area", Value = (object)employee.Area ?? DBNull.Value });
 
             sqlConnection.Open();
 
@@ -129,6 +135,8 @@ namespace FitnessCenter.DataAccess
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = employee.Name });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Description", Value = (object)employee.Description ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Capacity", Value = (object)employee.Capacity ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Area", Value = (object)employee.Area ?? DBNull.Value });
 
             sqlConnection.Open();
 

@@ -10,8 +10,23 @@ namespace FitnessCenter.Entities
     public class Activity
     {
         public int ID { get; set; }
+
+        [Required]
+        [Display(Name = "Название")]
         public string Name { get; set; }
+
+        [Display(Name = "Описание")]
         public string Description { get; set; }
+
+        [Required]
+        [Display(Name = "Тип/группа")]
+        public int TypeId { get; set; }
+
         public ActivityType Type { get; set; }
+
+        [Required]
+        [Display(Name = "Продолжительность")]
+        [DataType(DataType.Time)]
+        public TimeSpan? Duration { get; set; }
     }
 }
