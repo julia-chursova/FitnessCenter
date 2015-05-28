@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FitnessCenter.Entities;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -19,7 +20,7 @@ namespace FitnessCenter.DataAccess
             }
         }
 
-        public static void InsertTicketOrder(int ticketId, int clientId)
+        public static void InsertTicketOrder(TicketOrder ticketOrder)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
@@ -31,11 +32,33 @@ namespace FitnessCenter.DataAccess
 
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int });
 
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TicketId", Value = ticketId });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ValidFrom", Value = DateTime.Now });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ValidTo", Value = DateTime.Now.AddMonths(1) });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@OrderDate", Value = DateTime.Now });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ClientId", Value = clientId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TicketId", Value = ticketOrder.TicketId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ActivationDate", Value = ticketOrder.ActivationDate });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@OrderDate", Value = ticketOrder.OrderDate });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ManagerId", Value = ticketOrder.ManagerId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ClientId", Value = ticketOrder.ClientId });
+
+            sqlConnection.Open();
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public static void UpdateTicketOrder(TicketOrder ticketOrder)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "UpdateTicketOrder";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = ticketOrder.Id });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TicketId", Value = ticketOrder.TicketId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ActivationDate", Value = ticketOrder.ActivationDate });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@OrderDate", Value = ticketOrder.OrderDate });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ManagerId", Value = ticketOrder.ManagerId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@ClientId", Value = ticketOrder.ClientId });
 
             sqlConnection.Open();
 

@@ -38,15 +38,32 @@ namespace FitnessCenter.DataAccess
 
             while (reader.Read())
             {
-                result.Add(new Client()
+                var client = new Client()
                 {
                     Id = reader.GetInt32(0),
                     Name = reader.GetString(1),
                     Surname = reader.GetString(2),
                     MiddleName = !reader.IsDBNull(3) ? reader.GetString(3) : String.Empty,
-                    Password = reader.GetString(4),
-                    Login = reader.GetString(5)
-                });
+                    BirthdayDate = !reader.IsDBNull(4) ? (DateTime?)reader.GetDateTime(4) : null,
+                    Address = !reader.IsDBNull(5) ? reader.GetString(5) : String.Empty,
+                    Phone = !reader.IsDBNull(6) ? reader.GetString(6) : String.Empty
+                };
+
+                if (!reader.IsDBNull(7))
+                {
+                    if (reader.GetBoolean(7))
+                    {
+                        client.Gender = Genders.Female;
+                    }
+                    else
+                    {
+                        client.Gender = Genders.Male;
+                    }
+                }
+
+                sqlConnection.Close();
+
+                result.Add(client);
             }
 
             return result;
@@ -78,79 +95,25 @@ namespace FitnessCenter.DataAccess
                     Name = reader.GetString(1),
                     Surname = reader.GetString(2),
                     MiddleName = !reader.IsDBNull(3) ? reader.GetString(3) : String.Empty,
-                    Password = reader.GetString(4),
-                    Login = reader.GetString(5)
+                    BirthdayDate = !reader.IsDBNull(4) ? (DateTime?)reader.GetDateTime(4) : null,
+                    Address = !reader.IsDBNull(5) ? reader.GetString(5) : String.Empty,
+                    Phone = !reader.IsDBNull(6) ? reader.GetString(6) : String.Empty
                 };
-            }
 
-            return result;
-        }
-
-        public static Client GetClientByLoginPassword(string login, string password)
-        {
-            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = "GetClientByLoginPassword";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandTimeout = 600;
-            cmd.Connection = sqlConnection;
-
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Login", Value = login });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Password", Value = password });
-
-            sqlConnection.Open();
-
-            var reader = cmd.ExecuteReader();
-
-            Client result = null;
-
-            if (reader.Read())
-            {
-                result = new Client()
+                if (!reader.IsDBNull(7))
                 {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    Surname = reader.GetString(2),
-                    MiddleName = !reader.IsDBNull(3) ? reader.GetString(3) : String.Empty,
-                    Password = reader.GetString(4),
-                    Login = reader.GetString(5)
-                };
+                    if (reader.GetBoolean(7))
+                    {
+                        result.Gender = Genders.Female;
+                    }
+                    else
+                    {
+                        result.Gender = Genders.Male;
+                    }
+                }
             }
 
-            return result;
-        }
-
-        public static Client GetClientByLogin(string login)
-        {
-            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = "GetClientByLogin";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandTimeout = 600;
-            cmd.Connection = sqlConnection;
-
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Login", Value = login });
-
-            sqlConnection.Open();
-
-            var reader = cmd.ExecuteReader();
-
-            Client result = null;
-
-            if (reader.Read())
-            {
-                result = new Client()
-                {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    Surname = reader.GetString(2),
-                    MiddleName = !reader.IsDBNull(3) ? reader.GetString(3) : String.Empty,
-                    Password = reader.GetString(4),
-                    Login = reader.GetString(5)
-                };
-            }
+            sqlConnection.Close();
 
             return result;
         }
@@ -165,12 +128,83 @@ namespace FitnessCenter.DataAccess
             cmd.CommandTimeout = 600;
             cmd.Connection = sqlConnection;
 
+            object gender;
+
+            if (client.Gender == null)
+            {
+                gender = DBNull.Value;
+            }
+            else
+            {
+                gender = client.Gender == Genders.Female;
+            }
+
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = client.Name });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Surname", Value = client.Surname});
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Middlename", Value = (object)client.MiddleName ?? DBNull.Value });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Password", Value = client.Password });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Login", Value = client.Login });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@BirthdayDate", Value = (object)client.BirthdayDate ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Address", Value = (object)client.Address ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Phone", Value = (object)client.Phone ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Gender", Value = gender });
+            
+
+            sqlConnection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        public static void UpdateClient(Client client)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "UpdateClient";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            object gender;
+
+            if (client.Gender == null)
+            {
+                gender = DBNull.Value;
+            }
+            else
+            {
+                gender = client.Gender == Genders.Female;
+            }
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = client.Id });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = client.Name });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Surname", Value = client.Surname });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Middlename", Value = (object)client.MiddleName ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@BirthdayDate", Value = (object)client.BirthdayDate ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Address", Value = (object)client.Address ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Phone", Value = (object)client.Phone ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Gender", Value = gender });
+
+
+            sqlConnection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        public static void DeleteClient(int id)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "DeleteClient";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 600;
+            cmd.Connection = sqlConnection;
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = id });
 
             sqlConnection.Open();
 
