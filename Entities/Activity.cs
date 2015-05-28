@@ -27,6 +27,7 @@ namespace FitnessCenter.Entities
 
         [Required]
         [Display(Name = "Продолжительность")]
+        [DisplayFormat(DataFormatString = @"{0:hh\:mm}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Time)]
         public TimeSpan? Duration { get; set; }
     }

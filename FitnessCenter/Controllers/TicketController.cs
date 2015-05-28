@@ -41,7 +41,6 @@ namespace FitnessCenter.Controllers
         // GET: Ticket/Create
         public ActionResult Create()
         {
-            ViewBag.ActivityTypeId = new SelectList(ActivityTypeDal.GetActivityTypes(), "Id", "Name");
             return View(new Ticket());
         }
 
@@ -54,7 +53,6 @@ namespace FitnessCenter.Controllers
                 TicketDal.InsertTicket(model);
                 return RedirectToAction("Index");
             }
-            ViewBag.ActivityTypeId = new SelectList(ActivityTypeDal.GetActivityTypes(), "Id", "Name");
             return View(model);
         }
 
@@ -62,8 +60,6 @@ namespace FitnessCenter.Controllers
         public ActionResult Edit(int id)
         {
             var model = TicketDal.GetTicket(id);
-            var activities = ActivityTypeDal.GetActivityTypes();
-            ViewBag.ActivityTypeId = new SelectList(activities, "Id", "Name", activities.FirstOrDefault(a => a.Id == model.ActivityType.Id));
             return View(model);
         }
 
@@ -76,7 +72,6 @@ namespace FitnessCenter.Controllers
                 TicketDal.UpdateTicket(model);
                 return RedirectToAction("Index");
             }
-            ViewBag.ActivityTypeId = new SelectList(ActivityTypeDal.GetActivityTypes(), "Id", "Name", model.ActivityType.Id);
             return View(model);
         }
 

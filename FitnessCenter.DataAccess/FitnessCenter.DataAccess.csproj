@@ -43,6 +43,7 @@
     <Compile Include="ActivityDal.cs" />
     <Compile Include="ActivityTypeDal.cs" />
     <Compile Include="ClientDal.cs" />
+    <Compile Include="DiscountDal.cs" />
     <Compile Include="EmployeeDal.cs" />
     <Compile Include="EmployeePositionDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -50,11 +51,6 @@
     <Compile Include="TicketDal.cs" />
     <Compile Include="TicketOrderDal.cs" />
     <Compile Include="UserDal.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\FitnessCenter.Entities.csproj">

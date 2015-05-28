@@ -23,14 +23,6 @@
         </dd>
 
         <dt>
-            Тип занятий
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ActivityType.Name)
-        </dd>
-
-        <dt>
             Время посещения (с)
         </dt>
 
@@ -44,6 +36,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.AvailableTo)
+        </dd>
+
+        <dt>
+            Срок действия
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration) месяц(месяцев)
         </dd>
 
     </dl>

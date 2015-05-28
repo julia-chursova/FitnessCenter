@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FitnessCenter.DataAccess
 {
-    public class TicketDal
+    public class DiscountDal
     {
         protected static string ConnectionString
         {
@@ -20,12 +20,12 @@ namespace FitnessCenter.DataAccess
             }
         }
 
-        public static List<Ticket> GetTickets()
+        public static List<Discount> GetDiscounts()
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "GetTickets";
+            cmd.CommandText = "GetDiscounts";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 600;
             cmd.Connection = sqlConnection;
@@ -34,30 +34,30 @@ namespace FitnessCenter.DataAccess
 
             var reader = cmd.ExecuteReader();
 
-            List<Ticket> result = new List<Ticket>();
+            List<Discount> result = new List<Discount>();
 
             while (reader.Read())
             {
-                result.Add(new Ticket()
+                result.Add(new Discount()
                 {
                     Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    Cost = reader.GetDecimal(2),
-                    AvailableFrom = !reader.IsDBNull(3) ? (TimeSpan?)reader.GetTimeSpan(3) : null,
-                    AvailableTo = !reader.IsDBNull(4) ? (TimeSpan?)reader.GetTimeSpan(4) : null,
-                    Duration = reader.GetInt32(5)
+                    TicketId = reader.GetInt32(1),
+                    Ticket = TicketDal.GetTicket(reader.GetInt32(1)),
+                    Value = reader.GetInt32(2),
+                    StartDate = reader.GetDateTime(3),
+                    EndDate = reader.GetDateTime(4)
                 });
             }
 
             return result;
         }
 
-        public static Ticket GetTicket(int id)
+        public static Discount GetDiscount(int id)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "GetTicket";
+            cmd.CommandText = "GetDiscount";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 600;
             cmd.Connection = sqlConnection;
@@ -68,52 +68,51 @@ namespace FitnessCenter.DataAccess
 
             var reader = cmd.ExecuteReader();
 
-            Ticket result = null;
+            Discount result = null;
 
             if (reader.Read())
             {
-                result = new Ticket()
+                result = new Discount()
                 {
                     Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    Cost = reader.GetDecimal(2),
-                    AvailableFrom = !reader.IsDBNull(3) ? (TimeSpan?)reader.GetTimeSpan(3) : null,
-                    AvailableTo = !reader.IsDBNull(4) ? (TimeSpan?)reader.GetTimeSpan(4) : null,
-                    Duration = reader.GetInt32(5)
+                    TicketId = reader.GetInt32(1),
+                    Ticket = TicketDal.GetTicket(reader.GetInt32(1)),
+                    Value = reader.GetInt32(2),
+                    StartDate = reader.GetDateTime(3),
+                    EndDate = reader.GetDateTime(4)
                 };
             }
 
             return result;
         }
 
-        public static void UpdateTicket(Ticket ticket)
+        public static void UpdateDiscount(Discount discount)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "UpdateTicket";
+            cmd.CommandText = "UpdateDiscount";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 600;
             cmd.Connection = sqlConnection;
 
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = ticket.Id });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = ticket.Name });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Cost", Value = ticket.Cost });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@AvailableFrom", Value = (object)ticket.AvailableFrom ?? DBNull.Value });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@AvailableTo", Value = (object)ticket.AvailableTo ?? DBNull.Value });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Duration", Value = ticket.Duration });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Value = discount.Id });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TicketId", Value = discount.TicketId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Value", Value = discount.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@StartDate", Value = discount.StartDate });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@EndDate", Value = discount.EndDate });
 
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
         }
 
-        public static void DeleteTicket(int id)
+        public static void DeleteDiscount(int id)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "DeleteTicket";
+            cmd.CommandText = "DeleteDiscount";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 600;
             cmd.Connection = sqlConnection;
@@ -125,23 +124,21 @@ namespace FitnessCenter.DataAccess
             cmd.ExecuteNonQuery();
         }
 
-        public static void InsertTicket(Ticket ticket)
+        public static void InsertActivity(Discount discount)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "InsertTicket";
+            cmd.CommandText = "InsertDiscount";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 600;
             cmd.Connection = sqlConnection;
 
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Id", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int });
-
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = ticket.Name });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Cost", Value = ticket.Cost });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@AvailableFrom", Value = (object)ticket.AvailableFrom ?? DBNull.Value });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@AvailableTo", Value = (object)ticket.AvailableTo ?? DBNull.Value });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Duration", Value = ticket.Duration });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@TicketId", Value = discount.TicketId });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Value", Value = discount.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@StartDate", Value = discount.StartDate });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@EndDate", Value = discount.EndDate });
 
             sqlConnection.Open();
 

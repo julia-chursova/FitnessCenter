@@ -12,22 +12,25 @@ namespace FitnessCenter.Entities
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Название")]
         public string Name { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Стоимость")]
         public decimal Cost { get; set; }
 
-        public ActivityType ActivityType { get; set; }
-
-        public int ActivityTypeId { get; set; }
-
+        [Display(Name = "Время посещения (с)")]
+        [DisplayFormat(DataFormatString = @"{0:hh\:mm}", ApplyFormatInEditMode = true)]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Time)]
         public TimeSpan? AvailableFrom { get; set; }
 
+        [Display(Name = "Время посещения (по)")]
+        [DisplayFormat(DataFormatString = @"{0:hh\:mm}", ApplyFormatInEditMode = true)]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Time)]
         public TimeSpan? AvailableTo { get; set; }
 
-        public Ticket()
-        {
-        }
+        [Required]
+        [Display(Name = "Продолжительность")]
+        public int Duration { get; set; }
     }
 }
