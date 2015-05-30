@@ -52,6 +52,8 @@ namespace FitnessCenter.DataAccess
                 });
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -89,6 +91,8 @@ namespace FitnessCenter.DataAccess
                 };
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -107,6 +111,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void InsertTicketOrder(TicketOrder ticketOrder)
@@ -130,6 +136,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void UpdateTicketOrder(TicketOrder ticketOrder)
@@ -152,6 +160,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
     }
 }

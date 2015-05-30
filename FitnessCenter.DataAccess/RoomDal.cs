@@ -48,6 +48,32 @@ namespace FitnessCenter.DataAccess
                 });
             }
 
+            sqlConnection.Close();
+
+            foreach (var room in result)
+            {
+                cmd = new SqlCommand();
+
+                cmd.CommandText = "GetRoomImages";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandTimeout = 600;
+                cmd.Connection = sqlConnection;
+
+                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@RoomId", Value = room.ID });
+
+                sqlConnection.Open();
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    room.FileNames.Add(
+                        new RoomFile { FileName = reader.GetString(1), Room = room });
+                }
+
+                sqlConnection.Close();
+            }
+
             return result;
         }
 
@@ -126,6 +152,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void DeleteRoom(int id)
@@ -143,6 +171,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void InsertRoom(Room room)

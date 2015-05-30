@@ -27,9 +27,9 @@ namespace FitnessCenter.Controllers
         // GET: TicketOrder/Create
         public ActionResult Create()
         {
-            ViewBag.SelectedTicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
-            ViewBag.SelectedClientId = new SelectList(ClientDal.GetClients(), "Id", "FullName");
-            ViewBag.SelectedManagerId = new SelectList(EmployeeDal.GetEmployees().Where(e => e.Position.Id == 2), "Id", "FullName");
+            ViewBag.TicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
+            ViewBag.ClientId = new SelectList(ClientDal.GetClients(), "Id", "FullName");
+            ViewBag.ManagerId = new SelectList(EmployeeDal.GetEmployees().Where(e => e.Position.Id == 2), "Id", "FullName");
             return View(new TicketOrder());
         }
 
@@ -42,9 +42,9 @@ namespace FitnessCenter.Controllers
                 TicketOrderDal.InsertTicketOrder(model);
                 return RedirectToAction("Index");
             }
-            ViewBag.SelectedTicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
-            ViewBag.SelectedClientId = new SelectList(ClientDal.GetClients(), "Id", "FullName");
-            ViewBag.SelectedManagerId = new SelectList(EmployeeDal.GetEmployees().Where(e => e.Position.Id == 2), "Id", "FullName");
+            ViewBag.TicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
+            ViewBag.ClientId = new SelectList(ClientDal.GetClients(), "Id", "FullName");
+            ViewBag.ManagerId = new SelectList(EmployeeDal.GetEmployees().Where(e => e.Position.Id == 2), "Id", "FullName");
             return View(model);
         }
 

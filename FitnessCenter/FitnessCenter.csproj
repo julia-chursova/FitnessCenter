@@ -193,6 +193,7 @@
     <Compile Include="Controllers\DiscountController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
@@ -460,6 +461,14 @@
     <Content Include="Views\Timetable\Details.cshtml" />
     <Content Include="Views\Timetable\Edit.cshtml" />
     <Content Include="Views\Timetable\Delete.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\Home\Instructors.cshtml" />
+    <Content Include="Views\Home\Rooms.cshtml" />
+    <Content Include="Views\Home\Discounts.cshtml" />
+    <Content Include="Views\Home\Tickets.cshtml" />
+    <Content Include="Views\Home\Timetable.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>

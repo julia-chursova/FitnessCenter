@@ -52,6 +52,8 @@ namespace FitnessCenter.DataAccess
                 });
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -89,6 +91,8 @@ namespace FitnessCenter.DataAccess
                 };
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -112,6 +116,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void DeleteTimetable(int id)
@@ -129,6 +135,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void InsertTimetable(TimetableItem timetable)
@@ -151,6 +159,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
     }
 }

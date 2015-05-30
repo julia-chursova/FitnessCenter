@@ -49,6 +49,8 @@ namespace FitnessCenter.DataAccess
                 });
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -83,6 +85,8 @@ namespace FitnessCenter.DataAccess
                 };
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -105,6 +109,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void DeleteDiscount(int id)
@@ -122,6 +128,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void InsertDiscount(Discount discount)
@@ -143,6 +151,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
     }
 }

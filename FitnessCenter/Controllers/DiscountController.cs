@@ -27,7 +27,7 @@ namespace FitnessCenter.Controllers
         // GET: Discount/Create
         public ActionResult Create()
         {
-            ViewBag.SelectedTicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
+            ViewBag.TicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
             return View(new Discount());
         }
 
@@ -40,7 +40,7 @@ namespace FitnessCenter.Controllers
                 DiscountDal.InsertDiscount(model);
                 return RedirectToAction("Index");
             }
-            ViewBag.SelectedTicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
+            ViewBag.TicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
             return View(model);
         }
 

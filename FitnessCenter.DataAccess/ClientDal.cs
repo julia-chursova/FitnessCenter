@@ -181,7 +181,7 @@ namespace FitnessCenter.DataAccess
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Name", Value = client.Name });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Surname", Value = client.Surname });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Middlename", Value = (object)client.MiddleName ?? DBNull.Value });
-            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@BirthdayDate", Value = (object)client.BirthdayDate ?? DBNull.Value });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Birthday", Value = (object)client.BirthdayDate ?? DBNull.Value });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Address", Value = (object)client.Address ?? DBNull.Value });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Phone", Value = (object)client.Phone ?? DBNull.Value });
             cmd.Parameters.Add(new SqlParameter() { ParameterName = "@Gender", Value = gender });
@@ -209,6 +209,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
     }
 }

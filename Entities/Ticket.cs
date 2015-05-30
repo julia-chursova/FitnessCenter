@@ -17,6 +17,7 @@ namespace FitnessCenter.Entities
 
         [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
         [Display(Name = "Стоимость")]
+        [Range(0, 1000000)]
         public decimal Cost { get; set; }
 
         [Display(Name = "Время посещения (с)")]
@@ -31,6 +32,7 @@ namespace FitnessCenter.Entities
 
         [Required]
         [Display(Name = "Продолжительность")]
+        [Range(0, 12)]
         public int Duration { get; set; }
     }
 }

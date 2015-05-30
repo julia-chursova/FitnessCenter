@@ -1,0 +1,47 @@
+﻿@model IEnumerable<FitnessCenter.Entities.Ticket>
+
+@{
+    ViewBag.Title = "Tickets";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Клубные карты</h2>
+
+<div class="col-md-12">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@item.Name</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Время посещения
+                        </dt>
+
+                        <dd>
+                            @item.AvailableFrom - @item.AvailableTo
+                        </dd>
+                        <dt>
+                            Срок
+                        </dt>
+
+                        <dd>
+                            @item.Duration месяц(а/ев)
+                        </dd>
+                        <dt>
+                            Стоимость
+                        </dt>
+
+                        <dd>
+                            @item.Cost
+                        </dd>                        
+                    </dl>
+                </div>
+            </div>
+        </div>
+    }
+</div>

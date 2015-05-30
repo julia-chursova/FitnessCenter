@@ -45,6 +45,8 @@ namespace FitnessCenter.DataAccess
                 });
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -74,6 +76,8 @@ namespace FitnessCenter.DataAccess
                     Name = reader.GetString(1)
                 };
             }
+
+            sqlConnection.Close();
 
             return result;
         }

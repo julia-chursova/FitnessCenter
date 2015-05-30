@@ -49,6 +49,8 @@ namespace FitnessCenter.DataAccess
                 });
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -82,6 +84,8 @@ namespace FitnessCenter.DataAccess
                     Duration = !reader.IsDBNull(4) ? (TimeSpan?)reader.GetTimeSpan(4) : null
                 });
             }
+
+            sqlConnection.Close();
 
             return result;
         }
@@ -117,6 +121,8 @@ namespace FitnessCenter.DataAccess
                 };
             }
 
+            sqlConnection.Close();
+
             return result;
         }
 
@@ -139,6 +145,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void DeleteActivity(int id)
@@ -156,6 +164,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public static void InsertActivity(Activity activity)
@@ -177,6 +187,8 @@ namespace FitnessCenter.DataAccess
             sqlConnection.Open();
 
             cmd.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
     }
 }

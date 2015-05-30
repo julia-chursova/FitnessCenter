@@ -59,6 +59,30 @@ namespace FitnessCenter.DataAccess
 
             sqlConnection.Close();
 
+            foreach (var employee in result)
+            {
+                cmd = new SqlCommand();
+
+                cmd.CommandText = "GetEmployeeImages";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandTimeout = 600;
+                cmd.Connection = sqlConnection;
+
+                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@EmployeeId", Value = employee.ID });
+
+                sqlConnection.Open();
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    employee.FileNames.Add(
+                        new EmployeeFile { FileName = reader.GetString(2), Employee = employee });
+                }
+
+                sqlConnection.Close();
+            }
+
             return result;
         }
 

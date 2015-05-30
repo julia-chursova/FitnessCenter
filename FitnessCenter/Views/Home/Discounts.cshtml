@@ -1,0 +1,57 @@
+﻿@model IEnumerable<FitnessCenter.Entities.Discount>
+
+@{
+    ViewBag.Title = "Discounts";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Discounts</h2>
+
+<div class="col-md-12">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@item.Ticket.Name - @item.Value %</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Время посещения
+                        </dt>
+
+                        <dd>
+                            @item.Ticket.AvailableFrom - @item.Ticket.AvailableTo
+                        </dd>
+                        <dt>
+                            Срок проведения акции
+                        </dt>
+
+                        <dd>
+                            @item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()
+                        </dd>
+                        <dt>
+                            Обычная цена
+                        </dt>
+
+                        <dd>
+                            @item.Ticket.Cost
+                        </dd>
+                        <dt>
+                            Цена со скидкой
+                        </dt>
+
+                        <dd>
+                            @{
+        var a = (1 - (decimal)((decimal)item.Value / 100)) * item.Ticket.Cost;
+        @a
+                            }
+                        </dd>
+                        </dl>
+                    </div>
+            </div>
+        </div>
+    }
+</div>
