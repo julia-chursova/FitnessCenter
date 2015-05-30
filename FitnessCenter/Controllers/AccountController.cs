@@ -106,28 +106,8 @@ namespace FitnessCenter.Controllers
             }
             else
             {
-                var client = ClientDal.GetClientByLoginPassword(model.Login, model.Password);
-
-                if (client != null)
-                {
-                    var identity = new ClaimsIdentity(new[] {
-                            new Claim(ClaimTypes.Name, model.Login),
-                        },
-                                DefaultAuthenticationTypes.ApplicationCookie,
-                                ClaimTypes.Name, ClaimTypes.Role);
-
-                    AuthenticationManager.SignIn(new AuthenticationProperties
-                    {
-                        IsPersistent = model.RememberMe
-                    }, identity);
-
-                    return RedirectToLocal(returnUrl);
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Неудачная попытка входа.");
-                    return View(model);
-                }
+                ModelState.AddModelError("", "Неудачная попытка входа.");
+                return View(model);
             }
         }
 
@@ -145,29 +125,29 @@ namespace FitnessCenter.Controllers
         [AllowAnonymous]
         public ActionResult Register(RegisterViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
 
-            ClientDal.InsertClient(new Client
-                {
-                    Name = model.Name,
-                    Surname = model.Surname,
-                    MiddleName = model.MiddleName,
-                    Password = model.Password,
-                    Login = model.Login
-                });
+            //ClientDal.InsertClient(new Client
+            //    {
+            //        Name = model.Name,
+            //        Surname = model.Surname,
+            //        MiddleName = model.MiddleName,
+            //        Password = model.Password,
+            //        Login = model.Login
+            //    });
 
-            var identity = new ClaimsIdentity(new[] {
-                            new Claim(ClaimTypes.Name, model.Login),
-                        },
-                            DefaultAuthenticationTypes.ApplicationCookie,
-                            ClaimTypes.Name, ClaimTypes.Role);
+            //var identity = new ClaimsIdentity(new[] {
+            //                new Claim(ClaimTypes.Name, model.Login),
+            //            },
+            //                DefaultAuthenticationTypes.ApplicationCookie,
+            //                ClaimTypes.Name, ClaimTypes.Role);
 
-            AuthenticationManager.SignIn(new AuthenticationProperties
-            {
-            }, identity);
+            //AuthenticationManager.SignIn(new AuthenticationProperties
+            //{
+            //}, identity);
 
             return RedirectToAction("Index", "Home");
         }

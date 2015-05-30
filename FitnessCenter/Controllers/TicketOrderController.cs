@@ -12,11 +12,11 @@ namespace FitnessCenter.Controllers
         // GET: TicketOrder
         public ActionResult Order(int id)
         {
-            var client = ClientDal.GetClientByLogin(HttpContext.User.Identity.Name);
-            if (client != null)
-            {
-                TicketOrderDal.InsertTicketOrder(id, client.Id);
-            }
+            //var client = ClientDal.GetClientByLogin(HttpContext.User.Identity.Name);
+            //if (client != null)
+            //{
+            //    TicketOrderDal.InsertTicketOrder(id, client.Id);
+            //}
             return RedirectToAction("Index", "Ticket");
         }
     }

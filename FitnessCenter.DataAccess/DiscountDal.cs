@@ -124,7 +124,7 @@ namespace FitnessCenter.DataAccess
             cmd.ExecuteNonQuery();
         }
 
-        public static void InsertActivity(Discount discount)
+        public static void InsertDiscount(Discount discount)
         {
             SqlConnection sqlConnection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();

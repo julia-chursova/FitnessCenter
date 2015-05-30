@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FitnessCenter.DataAccess;
+using FitnessCenter.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,79 +13,72 @@ namespace FitnessCenter.Controllers
         // GET: Discount
         public ActionResult Index()
         {
-            return View();
+            var discounts = DiscountDal.GetDiscounts();
+            return View(discounts);
         }
 
         // GET: Discount/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var discount = DiscountDal.GetDiscount(id);
+            return View(discount);
         }
 
         // GET: Discount/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.TicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
+            return View(new Discount());
         }
 
         // POST: Discount/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Discount model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                DiscountDal.InsertDiscount(model);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.TicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
+            return View(model);
         }
 
         // GET: Discount/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var discount = DiscountDal.GetDiscount(id);
+            var tickets = TicketDal.GetTickets();
+            ViewBag.TicketId = new SelectList(tickets, "Id", "Name", tickets.FirstOrDefault(t => t.Id == discount.TicketId));
+            return View(discount);
         }
 
         // POST: Discount/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Discount model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                DiscountDal.UpdateDiscount(model);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            var tickets = TicketDal.GetTickets();
+            ViewBag.TicketId = new SelectList(tickets, "Id", "Name", tickets.FirstOrDefault(t => t.Id == model.TicketId));
+            return View(model);
         }
 
         // GET: Discount/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var discount = DiscountDal.GetDiscount(id);
+            return View(discount);
         }
 
-        // POST: Discount/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            DiscountDal.DeleteDiscount(id);
+            return RedirectToAction("Index");
         }
     }
 }
