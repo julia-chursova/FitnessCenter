@@ -30,6 +30,14 @@ namespace FitnessCenter.Entities
         [Display(Name = "Отчество")]
         public string MiddleName { get; set; }
 
+        public string FullName
+        {
+            get
+            {
+                return String.Format("{0} {1} {2}", Surname, Name, MiddleName);
+            }
+        }
+
         [Display(Name = "Дата рождения")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]

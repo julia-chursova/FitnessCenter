@@ -448,6 +448,11 @@
     <Content Include="Views\Client\Details.cshtml" />
     <Content Include="Views\Client\Edit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
+    <Content Include="Views\TicketOrder\Create.cshtml" />
+    <Content Include="Views\TicketOrder\Index.cshtml" />
+    <Content Include="Views\TicketOrder\Details.cshtml" />
+    <Content Include="Views\TicketOrder\Delete.cshtml" />
+    <Content Include="Views\TicketOrder\Edit.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>
@@ -457,7 +462,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Documents\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Views\TicketOrder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

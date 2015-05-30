@@ -27,7 +27,7 @@ namespace FitnessCenter.Controllers
         // GET: Discount/Create
         public ActionResult Create()
         {
-            ViewBag.TicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
+            ViewBag.SelectedTicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
             return View(new Discount());
         }
 
@@ -40,7 +40,7 @@ namespace FitnessCenter.Controllers
                 DiscountDal.InsertDiscount(model);
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
+            ViewBag.SelectedTicketId = new SelectList(TicketDal.GetTickets(), "Id", "Name");
             return View(model);
         }
 
@@ -49,7 +49,7 @@ namespace FitnessCenter.Controllers
         {
             var discount = DiscountDal.GetDiscount(id);
             var tickets = TicketDal.GetTickets();
-            ViewBag.TicketId = new SelectList(tickets, "Id", "Name", tickets.FirstOrDefault(t => t.Id == discount.TicketId));
+            ViewBag.SelectedTicketId = new SelectList(tickets, "Id", "Name", tickets.FirstOrDefault(t => t.Id == discount.TicketId));
             return View(discount);
         }
 
@@ -63,7 +63,7 @@ namespace FitnessCenter.Controllers
                 return RedirectToAction("Index");
             }
             var tickets = TicketDal.GetTickets();
-            ViewBag.TicketId = new SelectList(tickets, "Id", "Name", tickets.FirstOrDefault(t => t.Id == model.TicketId));
+            ViewBag.SelectedTicketId = new SelectList(tickets, "Id", "Name", tickets.FirstOrDefault(t => t.Id == model.TicketId));
             return View(model);
         }
 

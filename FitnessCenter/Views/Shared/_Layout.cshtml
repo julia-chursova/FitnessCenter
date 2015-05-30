@@ -25,12 +25,13 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Сотрудники", "Index", "Employee")</li>
                     <li>@Html.ActionLink("Залы", "Index", "Room")</li>
-                    <li>@Html.ActionLink("Занятия/услуги", "Index", "Activity")</li>                    
+                    <li>@Html.ActionLink("Занятия", "Index", "Activity")</li>                    
                     <li>@Html.ActionLink("Типы занятий", "Index", "ActivityType")</li>
-                    <li>@Html.ActionLink("Акции/скидки", "Index", "Discount")</li>
+                    <li>@Html.ActionLink("Скидки", "Index", "Discount")</li>
                     <li>@Html.ActionLink("Клиенты", "Index", "Client")</li>
                     <li>@Html.ActionLink("Клубные карты", "Index", "Ticket")</li>
-                    <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Выдача карт", "Index", "TicketOrder")</li>
+                    @*<li>@Html.ActionLink("Контакты", "Contact", "Home")</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

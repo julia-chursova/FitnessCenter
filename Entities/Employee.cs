@@ -21,6 +21,14 @@ namespace FitnessCenter.Entities
 
         [Display(Name = "Отчество")]
         public string MiddleName { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return String.Format("{0} {1} {2}", Surname, Name, MiddleName);
+            }
+        }
         
         public EmployeePosition Position { get; set; }
 
