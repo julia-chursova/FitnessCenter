@@ -9,7 +9,9 @@ namespace FitnessCenter.Entities
 {
     public enum Genders
     {
+        [Display(Name="Мужской")]
         Male = 0,
+        [Display(Name = "Женский")]
         Female = 1
     }
 
@@ -29,6 +31,8 @@ namespace FitnessCenter.Entities
         public string MiddleName { get; set; }
 
         [Display(Name = "Дата рождения")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime? BirthdayDate { get; set; }
 
         [Display(Name = "Адрес")]
@@ -41,5 +45,8 @@ namespace FitnessCenter.Entities
 
         [Display(Name = "Пол")]
         public Genders? Gender { get; set; }
+
+        [Display(Name = "Пол")]
+        public int? GenderId { get; set; }
     }
 }
