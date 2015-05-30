@@ -62,7 +62,7 @@ namespace FitnessCenter.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Admin");
         }
 
         //
@@ -149,7 +149,7 @@ namespace FitnessCenter.Controllers
             //{
             //}, identity);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Admin");
         }
 
         protected override void Dispose(bool disposing)
@@ -198,7 +198,7 @@ namespace FitnessCenter.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Admin");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

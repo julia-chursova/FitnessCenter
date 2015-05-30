@@ -49,8 +49,6 @@
     </dl>
 </div>
 <p>
-    @if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){@Html.ActionLink("Редактировать", "Edit", new {  id = Model.Id  })} |
-    @if (Request.IsAuthenticated)
-    { @Html.ActionLink("Заказать", "Order", new { id = Model.Id }, null)} |
+    @Html.ActionLink("Редактировать", "Edit", new {  id = Model.Id  }) |
     @Html.ActionLink("Назад", "Index")
 </p>

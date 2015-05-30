@@ -1,0 +1,68 @@
+﻿@model FitnessCenter.Entities.TimetableItem
+
+@{
+    ViewBag.Title = "Подробности";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Подробности</h2>
+
+<div>
+    <h4>Расписание</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RoomId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activity.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.FullName)
+        </dd>        
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DayOfWeek)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DayOfWeekString)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Удалить", "Delete", new { id = Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>

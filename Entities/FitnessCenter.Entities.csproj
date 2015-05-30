@@ -54,6 +54,7 @@
     <Compile Include="RoomFile.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="TicketOrder.cs" />
+    <Compile Include="TimetableItem.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

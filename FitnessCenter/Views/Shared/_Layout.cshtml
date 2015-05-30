@@ -23,14 +23,25 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Сотрудники", "Index", "Employee")</li>
-                    <li>@Html.ActionLink("Залы", "Index", "Room")</li>
-                    <li>@Html.ActionLink("Занятия", "Index", "Activity")</li>                    
-                    <li>@Html.ActionLink("Типы занятий", "Index", "ActivityType")</li>
-                    <li>@Html.ActionLink("Скидки", "Index", "Discount")</li>
-                    <li>@Html.ActionLink("Клиенты", "Index", "Client")</li>
-                    <li>@Html.ActionLink("Клубные карты", "Index", "Ticket")</li>
-                    <li>@Html.ActionLink("Выдача карт", "Index", "TicketOrder")</li>
+@if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Accounting)){
+                    <li>@Html.ActionLink("Сотрудники", "Index", "Employee")</li>}
+@if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Administrator)){
+                    <li>@Html.ActionLink("Залы", "Index", "Room")</li>}
+@if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){
+                    <li>@Html.ActionLink("Занятия", "Index", "Activity")</li>}
+@if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){
+                    <li>@Html.ActionLink("Типы занятий", "Index", "ActivityType")</li>}
+@if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){
+                    <li>@Html.ActionLink("Скидки", "Index", "Discount")</li>}
+@if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){
+                    <li>@Html.ActionLink("Клиенты", "Index", "Client")</li>}
+@if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){
+                    <li>@Html.ActionLink("Клубные карты", "Index", "Ticket")</li>}
+@if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager)){
+                    <li>@Html.ActionLink("Выдача карт", "Index", "TicketOrder")</li>}
+@if (FitnessCenter.Models.HtmlHelpers.SecurityTrim(FitnessCenter.Entities.Roles.Manager))
+{
+    <li>@Html.ActionLink("Расписание", "Index", "Timetable")</li>}
                     @*<li>@Html.ActionLink("Контакты", "Contact", "Home")</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")

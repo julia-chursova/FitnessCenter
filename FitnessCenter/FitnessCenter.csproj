@@ -197,6 +197,7 @@
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\TicketOrderController.cs" />
+    <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -453,6 +454,12 @@
     <Content Include="Views\TicketOrder\Details.cshtml" />
     <Content Include="Views\TicketOrder\Delete.cshtml" />
     <Content Include="Views\TicketOrder\Edit.cshtml" />
+    <Content Include="Views\Timetable\Index.cshtml" />
+    <Content Include="Views\Timetable\Create.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TimetableItem.cshtml" />
+    <Content Include="Views\Timetable\Details.cshtml" />
+    <Content Include="Views\Timetable\Edit.cshtml" />
+    <Content Include="Views\Timetable\Delete.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>

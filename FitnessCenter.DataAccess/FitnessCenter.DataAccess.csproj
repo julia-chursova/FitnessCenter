@@ -50,6 +50,7 @@
     <Compile Include="RoomDal.cs" />
     <Compile Include="TicketDal.cs" />
     <Compile Include="TicketOrderDal.cs" />
+    <Compile Include="TimetableDal.cs" />
     <Compile Include="UserDal.cs" />
   </ItemGroup>
   <ItemGroup>
