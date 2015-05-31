@@ -89,5 +89,18 @@ namespace FitnessCenter.Entities
                     String.Format(@"{0:hh\:mm} - {1:hh\:mm}", StartTime, EndTime));
             }
         }
+
+        public string Info2
+        {
+            get
+            {
+                return String.Format("{1}{0}{2}{0}{3}{0}{4}{0}",
+                    Environment.NewLine,
+                    Activity.Name,
+                    Room.Name,
+                    Employee.FullName,
+                    String.Format(@"{0:hh\:mm} - {1:hh\:mm}", StartTime, EndTime));
+            }
+        }
     }
 }

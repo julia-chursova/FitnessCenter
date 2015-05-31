@@ -13,10 +13,10 @@ namespace FitnessCenter.Models
         public static void GetDocument(string filename)
         {
             var employees = EmployeeDal.GetEmployees();
-            CreateDocument(employees, filename);
+            CreateDocument(employees, filename, "");
         }
 
-        private static void CreateDocument(List<Employee> employees, string filename)
+        private static void CreateDocument(List<Employee> employees, string filename, string title)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace FitnessCenter.Models
 
                 //Add paragraph with Heading 1 style
                 Microsoft.Office.Interop.Word.Paragraph para1 = document.Content.Paragraphs.Add(ref missing);
-                para1.Range.Text = "Список сотрудников";
+                para1.Range.Text = title;
                 para1.Range.InsertParagraphAfter();                
 
                 //Create a 5X5 table and insert some dummy record

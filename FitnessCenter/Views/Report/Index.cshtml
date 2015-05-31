@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using FitnessCenter.Models
+
+<h2>Отчеты</h2>
+
+<ul class="list-group">
+    @if (Html.SecurityTrim(FitnessCenter.Entities.Roles.Manager) || Html.SecurityTrim(FitnessCenter.Entities.Roles.Administrator)) 
+    {<li class="list-group-item">@Html.ActionLink("Расписание по инструкторам", "Instructors", "Report")</li>}
+    @if (Html.SecurityTrim(FitnessCenter.Entities.Roles.Manager) || Html.SecurityTrim(FitnessCenter.Entities.Roles.Administrator))
+    {<li class="list-group-item">@Html.ActionLink("Расписание по залам", "Rooms", "Report")</li>
+    <li class="list-group-item">@Html.ActionLink("Список клиентов", "Clients", "Report")</li>}
+    @if (Html.SecurityTrim(FitnessCenter.Entities.Roles.Manager))
+        {<li class="list-group-item">@Html.ActionLink("Список услуг", "Activities", "Report")
+    </li>}
+    @if (Html.SecurityTrim(FitnessCenter.Entities.Roles.Accounting))
+    {<li class="list-group-item">@Html.ActionLink("Список сотрудников (общий)", "Employees", "Report")</li>
+    <li class="list-group-item">@Html.ActionLink("Список менеджеров", "Managers", "Report")</li>
+    <li class="list-group-item">@Html.ActionLink("Список инструкторов", "InstructorsReport", "Report")</li>
+    <li class="list-group-item">@Html.ActionLink("Отчет по выданным картам (общий за месяц)", "TicketOrderMonth", "Report")</li>
+    <li class="list-group-item">@Html.ActionLink("Отчет по выданным картам (общий за год)", "TicketOrderYear", "Report")</li>
+    <li class="list-group-item">@Html.ActionLink("Отчет по выданным картам (детальный за месяц)", "TicketOrderDetail", "Report")</li>
+    <li class="list-group-item">@Html.ActionLink("Отчет по выданным картам (по менеджерам)", "TicketOrderManager", "Report")</li>}
+    
+</ul>
+

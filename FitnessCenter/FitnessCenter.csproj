@@ -195,6 +195,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\TicketOrderController.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuthorizationService.cs" />
     <Compile Include="Models\EmployeeExporter.cs" />
+    <Compile Include="Models\ExportHelper.cs" />
     <Compile Include="Models\FormsAuthenticationService.cs" />
     <Compile Include="Models\FormsAuthorizationService.cs" />
     <Compile Include="Models\HtmlHelpers.cs" />
@@ -469,6 +471,9 @@
     <Content Include="Views\Home\Discounts.cshtml" />
     <Content Include="Views\Home\Tickets.cshtml" />
     <Content Include="Views\Home\Timetable.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\Rooms.cshtml" />
+    <Content Include="Views\Report\Instructors.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>

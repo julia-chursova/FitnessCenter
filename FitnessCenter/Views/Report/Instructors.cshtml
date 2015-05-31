@@ -1,0 +1,29 @@
+﻿@model IEnumerable<FitnessCenter.Entities.Employee>
+
+@{
+    ViewBag.Title = "Инструктора";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Инструктора</h2>
+
+<table class="table">
+    <tr>        
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>        
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.ActionLink("Расписание", "TimetableInstructor", "Report", new { employeeID = item.ID }, null)
+        </td>
+    </tr>
+}
+
+</table>
